@@ -14,7 +14,7 @@ public class Registro implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private RegistroPK id = new RegistroPK();
+    private RegistroPK id;
     private Instant entrada;
     private Instant saida;
     

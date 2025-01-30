@@ -1,22 +1,33 @@
 package com.estacionamento.app.entities;
 
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.estacionamento.app.entities.auxiliares.DadosPessoais;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_empresa")
-public class Empresa {
+public class Empresa implements Serializable{
+    private static final Long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @Embedded
     private DadosPessoais dadosEmpresa;
-    @OneToOne(mappedBy = "id.empresa")
-    private Set<Estacionamento> estacionamento = new HashSet<>();
+    @OneToMany(mappedBy = "empresa")
+    private Set<Estacionamento> estacionamento;
 
     public Empresa() {
     }
@@ -47,8 +58,8 @@ public class Empresa {
         return estacionamento;
     }
 
-    public void setEstacionamento(Estacionamento estacionamento) {
-        this.estacionamento.add(estacionamento);
+    public void setEstacionamento(Set<Estacionamento> estacionamento) {
+        this.estacionamento = estacionamento;
     }
 
     @Override

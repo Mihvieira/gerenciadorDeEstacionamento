@@ -1,5 +1,8 @@
 package com.estacionamento.app.entities.auxiliares;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class DadosPessoais {
 
     private String nome;

@@ -6,6 +6,7 @@ import com.estacionamento.app.entities.Vaga;
 import com.estacionamento.app.entities.Veiculo;
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Embeddable
@@ -13,8 +14,10 @@ public class RegistroPK implements Serializable{
     private static final Long serialVersionUID = 1L;
 
     @ManyToOne
+    @JoinColumn(name = "vaga_id")
     private Vaga vaga;
     @ManyToOne
+    @JoinColumn(name = "veiculo_id")
     private Veiculo veiculo;
 
     public RegistroPK() {

@@ -1,31 +1,47 @@
 package com.estacionamento.app.entities;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
-public class Estacionamento {
+@Entity
+@Table(name = "tb_estacionamento")
+public class Estacionamento implements Serializable{
+    private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(mappedBy = "estacionamento_id")
-    private Vaga vaga;
-    @OneToOne(mappedBy = "estacionamento_id")
+
+    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Vaga> vagas;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
+
     private Integer quantidadeMaxMotos;
     private Integer quantidadeMaxCarros;
     
     public Estacionamento() {
     }
 
-    public Estacionamento(Long id, Vaga vaga, Integer quantidadeMaxMotos,
-            Integer quantidadeMaxCarros) {
+    public Estacionamento(Long id, Set<Vaga> vagas, Integer quantidadeMaxMotos, Integer quantidadeMaxCarros, Empresa empresa) {
         this.id = id;
-        this.vaga = vaga;
+        this.vagas = vagas;
         this.quantidadeMaxMotos = quantidadeMaxMotos;
         this.quantidadeMaxCarros = quantidadeMaxCarros;
+        this.empresa= empresa;
     }
 
     public Long getId() {
@@ -36,12 +52,12 @@ public class Estacionamento {
         this.id = id;
     }
 
-    public Vaga getVaga() {
-        return vaga;
+    public Set<Vaga> getVagas() {
+        return vagas;
     }
 
-    public void setVaga(Vaga vaga) {
-        this.vaga = vaga;
+    public void setVagas(Set<Vaga> vagas) {
+        this.vagas = vagas;
     }
 
     public Integer getQuantidadeMaxMotos() {
@@ -58,6 +74,14 @@ public class Estacionamento {
 
     public void setQuantidadeMaxCarros(Integer quantidadeMaxCarros) {
         this.quantidadeMaxCarros = quantidadeMaxCarros;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
     @Override
@@ -87,7 +111,7 @@ public class Estacionamento {
 
     @Override
     public String toString() {
-        return "Estacionamento [id=" + id + ", vaga=" + vaga + ", quantidadeMaxMotos="
+        return "Estacionamento [id=" + id + ", vaga=" + vagas + ", quantidadeMaxMotos="
                 + quantidadeMaxMotos + ", quantidadeMaxCarros=" + quantidadeMaxCarros + "]";
     }
 
