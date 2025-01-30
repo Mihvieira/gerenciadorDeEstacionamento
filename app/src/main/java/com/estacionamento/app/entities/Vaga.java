@@ -21,7 +21,7 @@ public class Vaga implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     private String setor;
     private Integer tipoVaga;
     private Integer estadoVaga;

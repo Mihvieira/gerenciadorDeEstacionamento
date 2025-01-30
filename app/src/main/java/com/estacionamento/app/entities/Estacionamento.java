@@ -1,13 +1,17 @@
 package com.estacionamento.app.entities;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
 public class Estacionamento {
 
-    Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne(mappedBy = "estacionamento_id")
     private Vaga vaga;
-    private Veiculo veiculo;
     @OneToOne(mappedBy = "estacionamento_id")
     private Empresa empresa;
     private Integer quantidadeMaxMotos;
@@ -16,11 +20,10 @@ public class Estacionamento {
     public Estacionamento() {
     }
 
-    public Estacionamento(Long id, Vaga vaga, Veiculo veiculo, Integer quantidadeMaxMotos,
+    public Estacionamento(Long id, Vaga vaga, Integer quantidadeMaxMotos,
             Integer quantidadeMaxCarros) {
         this.id = id;
         this.vaga = vaga;
-        this.veiculo = veiculo;
         this.quantidadeMaxMotos = quantidadeMaxMotos;
         this.quantidadeMaxCarros = quantidadeMaxCarros;
     }
@@ -39,14 +42,6 @@ public class Estacionamento {
 
     public void setVaga(Vaga vaga) {
         this.vaga = vaga;
-    }
-
-    public Veiculo getVeiculo() {
-        return veiculo;
-    }
-
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
     }
 
     public Integer getQuantidadeMaxMotos() {
@@ -92,7 +87,7 @@ public class Estacionamento {
 
     @Override
     public String toString() {
-        return "Estacionamento [id=" + id + ", vaga=" + vaga + ", veiculo=" + veiculo + ", quantidadeMaxMotos="
+        return "Estacionamento [id=" + id + ", vaga=" + vaga + ", quantidadeMaxMotos="
                 + quantidadeMaxMotos + ", quantidadeMaxCarros=" + quantidadeMaxCarros + "]";
     }
 
