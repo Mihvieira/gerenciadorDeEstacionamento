@@ -8,6 +8,8 @@ import com.estacionamento.app.entities.auxiliares.EstadoVaga;
 import com.estacionamento.app.entities.auxiliares.TipoVeiculo;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,9 +17,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_vaga")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class Vaga implements Serializable{
     private static final Long serialVersionUID = 1L;
 
@@ -25,23 +33,20 @@ public class Vaga implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String setor;
-    private Integer tipoVaga;
-    private Integer estadoVaga;
+    @Enumerated(EnumType.STRING)
+    private TipoVeiculo tipoVaga;
+    @Enumerated(EnumType.STRING)
+    private EstadoVaga estadoVaga = EstadoVaga.Desocupada; //valor padrão
     @OneToMany(mappedBy = "id.vaga")
     private List<Registro> registros = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "estacionamento_id")
     private Estacionamento estacionamento;
-    
-    public Vaga() {
-    }
 
-    public Vaga(Long id, String setor, TipoVeiculo tipo, EstadoVaga estadoVaga, Estacionamento estacionamento) {
+    public Vaga(Long id, String setor, TipoVeiculo tipo, EstadoVaga estadoVaga) {
         this.id = id;
         this.setor = setor;
         setTipoVaga(tipo);
-        setEstadoVaga(estadoVaga);
-        this.estacionamento = estacionamento;
     }
 
 
@@ -62,12 +67,12 @@ public class Vaga implements Serializable{
     }
 
     public TipoVeiculo getTipoVaga() {
-        return TipoVeiculo.valueTipoveiculo(this.tipoVaga);
+        return this.tipoVaga;
     }
 
     public void setTipoVaga(TipoVeiculo tipo) {
         if (tipo != null) {
-            this.tipoVaga = tipo.getTipo();
+            this.tipoVaga = tipo;
         }
     }
 
@@ -81,20 +86,12 @@ public class Vaga implements Serializable{
 
 
     public EstadoVaga getEstadoVaga() {
-        return EstadoVaga.valueEstadoVaga(estadoVaga);
+        return this.estadoVaga;
     }
 
     public void setEstadoVaga(EstadoVaga estadoVaga) {
-        this.estadoVaga = estadoVaga.getEstado();
+        this.estadoVaga = estadoVaga;
     }   
-
-    public Estacionamento getEstacionamento() {
-        return estacionamento;
-    }
-
-    public void setEstacionamento(Estacionamento estacionamento) {
-        this.estacionamento = estacionamento;
-    }
 
     @Override
     public int hashCode() {

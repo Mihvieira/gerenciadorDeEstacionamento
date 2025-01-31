@@ -1,13 +1,9 @@
 package com.estacionamento.app.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.estacionamento.app.entities.auxiliares.DadosPessoais;
-
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,9 +11,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_empresa")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class Empresa implements Serializable{
     private static final Long serialVersionUID = 1L;
 
@@ -28,9 +30,6 @@ public class Empresa implements Serializable{
     private DadosPessoais dadosEmpresa;
     @OneToMany(mappedBy = "empresa")
     private Set<Estacionamento> estacionamento;
-
-    public Empresa() {
-    }
 
     public Empresa(Long id, DadosPessoais dadosEmpresa, Estacionamento estacionamento) {
         this.id = id;
@@ -54,9 +53,7 @@ public class Empresa implements Serializable{
         this.dadosEmpresa = dadosEmpresa;
     }
 
-    public Set<Estacionamento> getEstacionamento() {
-        return estacionamento;
-    }
+    
 
     public void setEstacionamento(Set<Estacionamento> estacionamento) {
         this.estacionamento = estacionamento;

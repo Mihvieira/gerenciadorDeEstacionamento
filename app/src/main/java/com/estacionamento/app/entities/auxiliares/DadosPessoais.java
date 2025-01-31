@@ -1,20 +1,28 @@
 package com.estacionamento.app.entities.auxiliares;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
+import lombok.Getter;
 
 @Embeddable
-public class DadosPessoais {
+@Getter
+public class DadosPessoais implements Serializable{
+    private static final Long serialVersionUID = 1L;
+
 
     private String nome;
     private String cnpj;
-    private String endereco;
+    @Embedded
+    private Endereco endereco;
     private String phone;
 
     public DadosPessoais() {
     }
 
 
-    public DadosPessoais(String nome, String cnpj, String endereco, String phone) {
+    public DadosPessoais(String nome, String cnpj, Endereco endereco, String phone) {
         this.nome = nome;
         this.cnpj = cnpj;
         this.endereco = endereco;
@@ -45,17 +53,14 @@ public class DadosPessoais {
     }
 
 
-
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
 
-
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-
 
 
     public String getPhone() {
