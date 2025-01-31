@@ -1,9 +1,63 @@
-# Definição dos tipos principais
+# Tipos de entrada
+input DadosPessoaisInput {
+  nome: String!
+  cnpj: String!
+  endereco: EnderecoInput!
+  telefone: String!
+}
+
+input EnderecoInput {
+  rua: String!
+  cidade: String!
+  estado: String!
+  cep: String!
+  uf: String!
+  complemento: String
+  numero: String
+}
+
+input EstacionamentoInput {
+  nome: String!
+  empresaId: ID!
+}
+
+# Tipos principais
+type DadosPessoais {
+  nome: String!
+  cnpj: String!
+  endereco: Endereco!
+  telefone: String!
+}
+
+type Endereco {
+  rua: String!
+  cidade: String!
+  estado: String!
+  cep: String!
+  uf: String!
+  complemento: String
+  numero: String
+}
+
+type Empresa {
+  id: ID!
+  dadosPessoais: DadosPessoais!
+  estacionamentos: [Estacionamento]!
+}
+
+type Estacionamento {
+  id: ID!
+  empresa: Empresa
+  vagas: [Vaga]!
+  quantidadeMaxMotos: Int!
+  quantidadeMaxCarros: Int!
+}
+
 type Vaga {
   id: ID!
-  setor: String
-  tipo: TipoVeiculo!
-  estadoVaga: EstadoVaga
+  setor: String!
+  tipoVaga: TipoVeiculo!
+  estadoVaga: EstadoVaga!
   registros: [Registro!]!
 }
 
@@ -17,38 +71,11 @@ type Veiculo {
 }
 
 type Registro {
+  id: ID!
   vaga: Vaga!
   veiculo: Veiculo!
   entrada: String!
   saida: String
-}
-
-type Empresa {
-  id: ID!
-  dadosEmpresa: DadosPessoais!
-  estacionamento: [Estacionamento]!
-}
-
-type DadosPessoais {
-  nome: String!
-  endereco: Endereco!
-  telefone: String!
-}
-
-type Estacionamento {
-  quantidadeMaxMotos: Integer!
-  quantidadeMaxCarros: Integer!
-  vagas: [Vaga]!
-}
-
-type Endereco{
-  logradouro: String!
-  bairro: String!
-  cep: String!
-  cidade: String!
-  uf: String!
-  complemento: String!
-  numero: String!
 }
 
 # Enumerações para tipos de vaga e veículo
@@ -65,26 +92,25 @@ enum TipoVeiculo {
 # Consultas para buscar dados
 type Query {
   vagas: [Vaga!]!
+  vagaPorId(id: ID!): Vaga
   veiculos: [Veiculo!]!
+  veiculoPorId(id: ID!): Veiculo
+  veiculoPorPlaca(placa: String!): Veiculo
   registros: [Registro!]!
-  vaga(id: ID!): Vaga
-  veiculo(id: ID!): Veiculo
-  veiculo(placa: String!): Veiculo
-  registro(id: ID!): Registro
-  registros: [Registro!]!
+  registroPorId(id: ID!): Registro
   empresas: [Empresa!]!
-  empresa(id: ID!): Empresa
-  empresa(nome: String!): Empresa
+  empresaPorId(id: ID!): Empresa
+  empresaPorNome(nome: String!): Empresa
   estacionamentos: [Estacionamento!]!
 }
 
 # Mutations para criar e atualizar dados
 type Mutation {
   criarVaga(setor: String!, tipoVaga: TipoVeiculo!): Vaga!
-  atualizarEstadoVaga(id: ID!, estadoVaga: String!): Vaga!
+  atualizarEstadoVaga(id: ID!, estadoVaga: EstadoVaga!): Vaga!
   criarVeiculo(placa: String!, modelo: String!, tipo: TipoVeiculo!): Veiculo!
   atualizarVeiculo(id: ID!, placa: String!, modelo: String!, tipo: TipoVeiculo!): Veiculo!
   criarRegistro(vagaId: ID!, veiculoId: ID!, entrada: String!, saida: String!): Registro!
   atualizarRegistro(id: ID!, saida: String!): Registro!
-  criarEmpresa(dadosEmpresa: DadosPessoais!, estacionamento: [Estacionamento]!): Empresa!
+  criarEmpresa(dadosPessoais: DadosPessoaisInput!, estacionamento: EstacionamentoInput!): Empresa!
 }
