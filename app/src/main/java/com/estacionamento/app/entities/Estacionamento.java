@@ -1,7 +1,6 @@
 package com.estacionamento.app.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -10,12 +9,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "tb_estacionamento")
+@AllArgsConstructor
 public class Estacionamento implements Serializable{
     private static final Long serialVersionUID = 1L;
 
@@ -27,7 +29,11 @@ public class Estacionamento implements Serializable{
     private Set<Vaga> vagas;
 
     @ManyToOne
-    @JoinColumn(name = "empresa_id")
+    @JoinTable(
+        name = "tb_empresa_estacionamento",
+        joinColumns = @JoinColumn(name = "estacionamento_id"),
+        inverseJoinColumns = @JoinColumn(name = "empresa_id")
+    )
     private Empresa empresa;
 
     private Integer quantidadeMaxMotos;
@@ -36,12 +42,9 @@ public class Estacionamento implements Serializable{
     public Estacionamento() {
     }
 
-    public Estacionamento(Long id, Set<Vaga> vagas, Integer quantidadeMaxMotos, Integer quantidadeMaxCarros, Empresa empresa) {
-        this.id = id;
-        this.vagas = vagas;
+    public Estacionamento(Integer quantidadeMaxMotos, Integer quantidadeMaxCarros) {
         this.quantidadeMaxMotos = quantidadeMaxMotos;
         this.quantidadeMaxCarros = quantidadeMaxCarros;
-        this.empresa= empresa;
     }
 
     public Long getId() {

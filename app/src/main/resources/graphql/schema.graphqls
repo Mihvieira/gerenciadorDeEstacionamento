@@ -70,6 +70,8 @@ type Veiculo {
   registros: [Registro!]!
 }
 
+
+
 type Registro {
   id: ID!
   vaga: Vaga!
@@ -107,11 +109,19 @@ type Query {
 # Mutations para criar e atualizar dados
 type Mutation {
   criarVaga(setor: String!, tipoVaga: TipoVeiculo!): Vaga!
+  excluirVaga(id: ID!): Boolean!
   atualizarEstadoVaga(id: ID!, estadoVaga: EstadoVaga!): Vaga!
+
   criarVeiculo(placa: String!, modelo: String!, tipo: TipoVeiculo!): Veiculo!
+  excluirVeiculo(id: ID!): Boolean!
   atualizarVeiculo(id: ID!, placa: String!, modelo: String!, tipo: TipoVeiculo!): Veiculo!
+
   criarRegistro(vagaId: ID!, veiculoId: ID!, entrada: String!, saida: String!): Registro!
+  excluirRegistro(id: ID!): Boolean!
   atualizarRegistro(id: ID!, saida: String!): Registro!
+
   criarEmpresa(dadosPessoais: DadosPessoaisInput!, estacionamento: EstacionamentoInput!): Empresa!
+  excluirEmpresa(id: ID!): Boolean!
+  
   criarEstacionamento(estacionamento: EstacionamentoInput!): Estacionamento!
 }

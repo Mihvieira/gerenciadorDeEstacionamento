@@ -12,9 +12,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "tb_veiculo")
+@AllArgsConstructor
 public class Veiculo {
 
     @Id
@@ -24,14 +26,13 @@ public class Veiculo {
     @Column(nullable = false, unique = true)
     private String placa;
     private String modelo;
-    @OneToMany(mappedBy = "id.veiculo")
+    @OneToMany(mappedBy = "veiculo")
     private List<Registro> registros = new ArrayList<>();
 
     public Veiculo() {
     }
 
-    public Veiculo(Long id, TipoVeiculo tipo_veiculo, String placa, String modelo) {
-        this.id = id;
+    public Veiculo(TipoVeiculo tipo_veiculo, String placa, String modelo) {
         setTipo_veiculo(tipo_veiculo);
         this.placa = placa;
         this.modelo = modelo;

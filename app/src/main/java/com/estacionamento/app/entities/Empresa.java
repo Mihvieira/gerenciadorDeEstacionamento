@@ -1,6 +1,7 @@
 package com.estacionamento.app.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.estacionamento.app.entities.auxiliares.DadosPessoais;
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -28,8 +30,9 @@ public class Empresa implements Serializable{
     Long id;
     @Embedded
     private DadosPessoais dadosEmpresa;
-    @OneToMany(mappedBy = "empresa")
-    private Set<Estacionamento> estacionamento;
+    @OneToMany
+    @JoinColumn(name = "empresa_id")
+    private Set<Estacionamento> estacionamento = new HashSet<>();
 
     public Empresa(Long id, DadosPessoais dadosEmpresa, Estacionamento estacionamento) {
         this.id = id;

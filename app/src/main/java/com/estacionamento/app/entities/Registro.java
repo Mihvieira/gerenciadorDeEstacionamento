@@ -3,9 +3,12 @@ package com.estacionamento.app.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.estacionamento.app.entities.pk.RegistroPK;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,42 +16,51 @@ import jakarta.persistence.Table;
 public class Registro implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    private RegistroPK id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @ManyToOne
+    @JoinColumn(name = "vaga_id")
+    private Vaga vaga;
+    @ManyToOne
+    @JoinColumn(name = "veiculo_id")
+    private Veiculo veiculo;
     private Instant entrada;
     private Instant saida;
     
     public Registro() {
     }
 
-    public Registro(Vaga vaga, Veiculo veiculo, Instant entrada) {
-        this.id.setVaga(vaga);
-        this.id.setVeiculo(veiculo);
+    public Registro(Long id, Vaga vaga, Veiculo veiculo, Instant entrada, Instant saida) {
+        this.id = id;
+        this.vaga = vaga;
+        this.veiculo = veiculo;
         this.entrada = entrada;
+        this.saida = saida;
     }
 
-    public RegistroPK getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(RegistroPK id) {
+    public void setId(Long id) {
         this.id = id;
     }
-    
-    public Vaga getVaga(){
-        return this.id.getVaga();
+
+    public Vaga getVaga() {
+        return vaga;
     }
 
-    public Veiculo getVeiculo(){
-        return this.id.getVeiculo();
+    public void setVaga(Vaga vaga) {
+        this.vaga = vaga;
     }
 
-    public void setVaga(Vaga vaga){
-        this.id.setVaga(vaga);
+    public Veiculo getVeiculo() {
+        return veiculo;
     }
 
-    public void setVeiculo(Veiculo veiculo){
-        this.id.setVeiculo(veiculo);
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
     public Instant getEntrada() {

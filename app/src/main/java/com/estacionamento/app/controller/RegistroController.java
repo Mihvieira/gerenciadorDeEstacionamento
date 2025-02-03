@@ -1,15 +1,14 @@
 package com.estacionamento.app.controller;
 
 import java.time.Instant;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+
 import com.estacionamento.app.entities.Registro;
-import com.estacionamento.app.entities.pk.RegistroPK;
 import com.estacionamento.app.service.RegistroService;
 
 
@@ -28,7 +27,7 @@ public class RegistroController{
     }
 
     @QueryMapping
-    public Registro registroPorId(@Argument RegistroPK id){
+    public Registro registroPorId(@Argument Long id){
         return service.findById(id);
     }
 
@@ -38,7 +37,7 @@ public class RegistroController{
     }
 
     @MutationMapping
-    public Registro atualizarEstadoRegistro(@Argument RegistroPK id, @Argument Instant saida){
+    public Registro atualizarEstadoRegistro(@Argument Long id, @Argument Instant saida){
         return service.update(id, saida);
     }
     

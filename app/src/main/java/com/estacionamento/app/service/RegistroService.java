@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.estacionamento.app.entities.Registro;
-import com.estacionamento.app.entities.pk.RegistroPK;
 import com.estacionamento.app.repository.RegistroRepository;
 
 @Service
@@ -26,11 +25,11 @@ public class RegistroService {
         return repository.save(Registro);
     }
 
-    public Registro findById(RegistroPK id) {
+    public Registro findById(Long id) {
         return repository.findById(id).get();
     }
 
-    public Registro update(RegistroPK id, Instant saida) {
+    public Registro update(Long id, Instant saida) {
         Registro Registro = repository.findById(id).get();
         Registro.setSaida(saida);;
         return insert(Registro);
