@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.estacionamento.app.entities.auxiliares.TipoVeiculo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class Veiculo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer tipo_veiculo;
+    @Column(nullable = false, unique = true)
     private String placa;
     private String modelo;
     @OneToMany(mappedBy = "id.veiculo")

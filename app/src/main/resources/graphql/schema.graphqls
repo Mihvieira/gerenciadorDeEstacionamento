@@ -113,4 +113,5 @@ type Mutation {
   criarRegistro(vagaId: ID!, veiculoId: ID!, entrada: String!, saida: String!): Registro!
   atualizarRegistro(id: ID!, saida: String!): Registro!
   criarEmpresa(dadosPessoais: DadosPessoaisInput!, estacionamento: EstacionamentoInput!): Empresa!
+  criarEstacionamento(estacionamento: EstacionamentoInput!): Estacionamento!
 }
