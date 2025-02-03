@@ -32,4 +32,8 @@ public class EstacionamentoController {
         return service.insert(Estacionamento);
     }
 
+    @MutationMapping
+    public void excluirEstacionamento(@Argument Long id){
+        service.delete(id);
+    }
 }

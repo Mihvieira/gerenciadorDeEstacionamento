@@ -1,22 +1,20 @@
 package com.estacionamento.app.entities;
 
 import java.io.Serializable;
-import java.util.Set;
+import com.estacionamento.app.entities.auxiliares.DadosPessoais;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_estacionamento")
+@NoArgsConstructor
 @AllArgsConstructor
 public class Estacionamento implements Serializable{
     private static final Long serialVersionUID = 1L;
@@ -24,28 +22,10 @@ public class Estacionamento implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToMany(mappedBy = "estacionamento", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Vaga> vagas;
-
-    @ManyToOne
-    @JoinTable(
-        name = "tb_empresa_estacionamento",
-        joinColumns = @JoinColumn(name = "estacionamento_id"),
-        inverseJoinColumns = @JoinColumn(name = "empresa_id")
-    )
-    private Empresa empresa;
-
-    private Integer quantidadeMaxMotos;
-    private Integer quantidadeMaxCarros;
-    
-    public Estacionamento() {
-    }
-
-    public Estacionamento(Integer quantidadeMaxMotos, Integer quantidadeMaxCarros) {
-        this.quantidadeMaxMotos = quantidadeMaxMotos;
-        this.quantidadeMaxCarros = quantidadeMaxCarros;
-    }
+    @Embedded
+    private DadosPessoais dadosEmpresa;
+    private Integer qtdMaxMotos;
+    private Integer qtdMaxCarros;
 
     public Long getId() {
         return id;
@@ -55,36 +35,28 @@ public class Estacionamento implements Serializable{
         this.id = id;
     }
 
-    public Set<Vaga> getVagas() {
-        return vagas;
+    public Integer getQtdMaxMotos() {
+        return qtdMaxMotos;
     }
 
-    public void setVagas(Set<Vaga> vagas) {
-        this.vagas = vagas;
+    public void setQtdMaxMotos(Integer quantidadeMaxMotos) {
+        this.qtdMaxMotos = quantidadeMaxMotos;
     }
 
-    public Integer getQuantidadeMaxMotos() {
-        return quantidadeMaxMotos;
+    public Integer getQtdMaxCarros() {
+        return qtdMaxCarros;
     }
 
-    public void setQuantidadeMaxMotos(Integer quantidadeMaxMotos) {
-        this.quantidadeMaxMotos = quantidadeMaxMotos;
+    public void setQtdMaxCarros(Integer quantidadeMaxCarros) {
+        this.qtdMaxCarros = quantidadeMaxCarros;
     }
 
-    public Integer getQuantidadeMaxCarros() {
-        return quantidadeMaxCarros;
+    public DadosPessoais getDadosEmpresa() {
+        return dadosEmpresa;
     }
 
-    public void setQuantidadeMaxCarros(Integer quantidadeMaxCarros) {
-        this.quantidadeMaxCarros = quantidadeMaxCarros;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setDadosEmpresa(DadosPessoais dadosEmpresa) {
+        this.dadosEmpresa = dadosEmpresa;
     }
 
     @Override
@@ -114,8 +86,8 @@ public class Estacionamento implements Serializable{
 
     @Override
     public String toString() {
-        return "Estacionamento [id=" + id + ", vaga=" + vagas + ", quantidadeMaxMotos="
-                + quantidadeMaxMotos + ", quantidadeMaxCarros=" + quantidadeMaxCarros + "]";
+        return "Estacionamento [id=" + id + ", quantidadeMaxMotos="
+                + qtdMaxMotos + ", quantidadeMaxCarros=" + qtdMaxCarros + "]";
     }
 
 

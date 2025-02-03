@@ -13,8 +13,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -39,15 +37,11 @@ public class Vaga implements Serializable{
     private EstadoVaga estadoVaga = EstadoVaga.Desocupada; //valor padrão
     @OneToMany(mappedBy = "vaga")
     private List<Registro> registros = new ArrayList<>();
-    @ManyToOne
-    @JoinColumn(name = "estacionamento_id")
-    private Estacionamento estacionamento;
 
     public Vaga(String setor, TipoVeiculo tipo) {
         this.setor = setor;
         setTipoVaga(tipo);
     }
-
 
     public Long getId() {
         return id;

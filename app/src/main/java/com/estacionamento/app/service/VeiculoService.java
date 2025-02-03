@@ -34,4 +34,8 @@ public class VeiculoService {
         return insert(veiculo);
     }
 
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+
 }

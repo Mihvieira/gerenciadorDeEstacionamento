@@ -33,4 +33,8 @@ public class VagaService {
         return insert(vaga);
     }
 
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+
 }

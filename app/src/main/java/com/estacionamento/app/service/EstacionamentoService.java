@@ -30,4 +30,8 @@ public class EstacionamentoService {
         return insert(estacionamento);
     }
 
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+
 }

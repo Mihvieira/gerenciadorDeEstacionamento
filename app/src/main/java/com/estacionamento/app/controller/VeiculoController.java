@@ -42,5 +42,9 @@ public class VeiculoController {
         return service.update(veiculo);
     }
     
+    @MutationMapping
+    public void excluirVeiculo(@Argument Long id){
+        service.delete(id);
+    }
 
 }

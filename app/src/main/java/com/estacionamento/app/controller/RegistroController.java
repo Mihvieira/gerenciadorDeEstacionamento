@@ -41,5 +41,9 @@ public class RegistroController{
         return service.update(id, saida);
     }
     
+    @MutationMapping
+    public void excluirRegistro(@Argument Long id){
+        service.delete(id);
+    }
 
 }

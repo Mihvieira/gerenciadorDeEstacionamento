@@ -23,6 +23,7 @@ public class Veiculo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer tipo_veiculo;
+    private String cor;
     @Column(nullable = false, unique = true)
     private String placa;
     private String modelo;
@@ -32,11 +33,13 @@ public class Veiculo {
     public Veiculo() {
     }
 
-    public Veiculo(TipoVeiculo tipo_veiculo, String placa, String modelo) {
+    public Veiculo(TipoVeiculo tipo_veiculo, String cor, String placa, String modelo) {
         setTipo_veiculo(tipo_veiculo);
+        this.cor = cor;
         this.placa = placa;
         this.modelo = modelo;
     }
+
 
     public Long getId() {
         return id;
@@ -53,6 +56,16 @@ public class Veiculo {
     public void setTipo_veiculo(TipoVeiculo tipo_veiculo) {
         this.tipo_veiculo = tipo_veiculo.getTipo();
     }
+
+    public String getCor() {
+        return cor;
+    }
+
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
 
     public String getPlaca() {
         return placa;

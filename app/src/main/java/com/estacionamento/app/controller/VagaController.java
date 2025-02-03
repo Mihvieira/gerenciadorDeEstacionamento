@@ -38,4 +38,9 @@ public class VagaController{
         return service.update(id, estadoVaga);
     }
 
+    @MutationMapping
+    public void excluirVaga(@Argument Long id){
+        service.delete(id);
+    }
+
 }
