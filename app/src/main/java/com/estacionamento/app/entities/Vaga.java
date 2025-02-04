@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_vaga")
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class Vaga implements Serializable{
@@ -32,15 +31,19 @@ public class Vaga implements Serializable{
     private Long id;
     private String setor;
     @Enumerated(EnumType.STRING)
-    private TipoVeiculo tipoVaga;
+    private TipoVeiculo tipoVeiculo;
     @Enumerated(EnumType.STRING)
-    private EstadoVaga estadoVaga = EstadoVaga.Desocupada; //valor padrão
+    private EstadoVaga estadoVaga;
     @OneToMany(mappedBy = "vaga")
     private List<Registro> registros = new ArrayList<>();
 
+    public Vaga() {
+    }
+
     public Vaga(String setor, TipoVeiculo tipo) {
         this.setor = setor;
-        setTipoVaga(tipo);
+        this.tipoVeiculo = tipo;
+        this.estadoVaga = EstadoVaga.DESOCUPADA;
     }
 
     public Long getId() {
@@ -59,14 +62,12 @@ public class Vaga implements Serializable{
         this.setor = setor;
     }
 
-    public TipoVeiculo getTipoVaga() {
-        return this.tipoVaga;
+    public TipoVeiculo getTipoVeiculo() {
+        return this.tipoVeiculo;
     }
 
-    public void setTipoVaga(TipoVeiculo tipo) {
-        if (tipo != null) {
-            this.tipoVaga = tipo;
-        }
+    public void setTipoVeiculo(TipoVeiculo tipo) {
+            this.tipoVeiculo = tipo;
     }
 
     public List<Registro> getRegistros() {
@@ -113,7 +114,7 @@ public class Vaga implements Serializable{
 
     @Override
     public String toString() {
-        return "Vaga [id=" + id + ", setor=" + setor + ", tipo=" + tipoVaga + ", estado=" + getEstadoVaga() + "]";
+        return "Vaga [id=" + id + ", setor=" + setor + ", tipo=" + tipoVeiculo + ", estado=" + getEstadoVaga() + "]";
     }
 
 

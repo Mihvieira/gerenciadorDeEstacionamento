@@ -27,6 +27,12 @@ public class Estacionamento implements Serializable{
     private Integer qtdMaxMotos;
     private Integer qtdMaxCarros;
 
+    public Estacionamento(DadosPessoais dadosEmpresa, Integer qtdMaxMotos, Integer qtdMaxCarros) {
+        this.dadosEmpresa = dadosEmpresa;
+        this.qtdMaxMotos = qtdMaxMotos;
+        this.qtdMaxCarros = qtdMaxCarros;
+    }
+
     public Long getId() {
         return id;
     }

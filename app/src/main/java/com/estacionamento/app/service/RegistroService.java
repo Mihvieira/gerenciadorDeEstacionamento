@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.estacionamento.app.dto.VagaDTO;
 import com.estacionamento.app.entities.Registro;
 import com.estacionamento.app.entities.Vaga;
 import com.estacionamento.app.entities.auxiliares.EstadoVaga;
@@ -28,7 +29,7 @@ public class RegistroService {
 
     public Registro insert(Registro registro) {
         Vaga vaga = registro.getVaga();
-        vaga.setEstadoVaga(EstadoVaga.Ocupada);
+        vaga.setEstadoVaga(EstadoVaga.OCUPADA);
         return repository.save(registro);
     }
 
@@ -40,13 +41,18 @@ public class RegistroService {
         Registro registro = repository.findById(id).get();
         registro.setSaida(saida);
         Vaga vaga = registro.getVaga();
-        vaga.setEstadoVaga(EstadoVaga.Desocupada);
-        vagaService.insert(vaga);
+        vaga.setEstadoVaga(EstadoVaga.DESOCUPADA);
+        vagaService.insert(new VagaDTO(vaga));
         return insert(registro);
     }
 
     public void delete(Long id){
         repository.deleteById(id);
+    }
+
+    public Registro findByDate(String data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByDate'");
     }
 
 }

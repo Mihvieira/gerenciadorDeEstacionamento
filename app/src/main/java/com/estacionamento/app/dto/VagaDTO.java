@@ -1,14 +1,70 @@
 package com.estacionamento.app.dto;
 
-import com.estacionamento.app.entities.Estacionamento;
+import java.io.Serializable;
+
+import com.estacionamento.app.entities.Vaga;
 import com.estacionamento.app.entities.auxiliares.EstadoVaga;
 import com.estacionamento.app.entities.auxiliares.TipoVeiculo;
 
-public record VagaDTO(
-    Long id,
-    String setor, 
-    TipoVeiculo tipoVaga,
-    EstadoVaga estadoVaga,
-    Estacionamento estacionamento
-) {
-} 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class VagaDTO implements Serializable{
+    private static final Long serialVersionUID = 1L;
+
+    private Long id;
+    private String setor;
+    private TipoVeiculo tipoVaga;
+    private EstadoVaga estadoVaga;
+    
+    public VagaDTO() {
+    }
+
+    public VagaDTO(Vaga vaga) {
+        this.id = vaga.getId();
+        this.setor = vaga.getSetor();
+        this.tipoVaga = vaga.getTipoVeiculo();
+        this.estadoVaga = vaga.getEstadoVaga();
+    }
+
+    public VagaDTO(String setor, TipoVeiculo tipoVaga, EstadoVaga estadoVaga) {
+        this.setor = setor;
+        this.tipoVaga = tipoVaga;
+        this.estadoVaga = estadoVaga;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSetor() {
+        return setor;
+    }
+
+    public void setSetor(String setor) {
+        this.setor = setor;
+    }
+
+    public TipoVeiculo getTipoVaga() {
+        return tipoVaga;
+    }
+
+    public void setTipoVaga(TipoVeiculo tipoVaga) {
+        this.tipoVaga = tipoVaga;
+    }
+
+    public EstadoVaga getEstadoVaga() {
+        return estadoVaga;
+    }
+
+    public void setEstadoVaga(EstadoVaga estadoVaga) {
+        this.estadoVaga = estadoVaga;
+    }
+
+    
+    
+}

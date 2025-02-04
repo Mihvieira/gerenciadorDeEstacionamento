@@ -1,5 +1,6 @@
 package com.estacionamento.app.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,22 +8,28 @@ import com.estacionamento.app.entities.auxiliares.TipoVeiculo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Entity
 @Table(name = "tb_veiculo")
 @AllArgsConstructor
-public class Veiculo {
+@Getter
+public class Veiculo implements Serializable{
+    private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer tipo_veiculo;
+    @Enumerated(EnumType.STRING)
+    private TipoVeiculo tipo;
     private String cor;
     @Column(nullable = false, unique = true)
     private String placa;
@@ -33,8 +40,8 @@ public class Veiculo {
     public Veiculo() {
     }
 
-    public Veiculo(TipoVeiculo tipo_veiculo, String cor, String placa, String modelo) {
-        setTipo_veiculo(tipo_veiculo);
+    public Veiculo(TipoVeiculo tipo, String cor, String placa, String modelo) {
+        this.tipo = tipo;
         this.cor = cor;
         this.placa = placa;
         this.modelo = modelo;
@@ -49,12 +56,13 @@ public class Veiculo {
         this.id = id;
     }
 
-    public TipoVeiculo getTipo_veiculo() {
-        return TipoVeiculo.valueTipoveiculo(tipo_veiculo);
+    public TipoVeiculo getTipo() {
+        return this.tipo;
     }
 
-    public void setTipo_veiculo(TipoVeiculo tipo_veiculo) {
-        this.tipo_veiculo = tipo_veiculo.getTipo();
+    public void setTipo(TipoVeiculo tipo_veiculo) {
+        this.tipo = tipo_veiculo;
+       
     }
 
     public String getCor() {
@@ -118,7 +126,7 @@ public class Veiculo {
 
     @Override
     public String toString() {
-        return "Veiculo [id=" + id + ", tipo_veiculo=" + tipo_veiculo + ", placa=" + placa + ", modelo=" + modelo
+        return "Veiculo [id=" + id + ", tipo_veiculo=" + tipo + ", placa=" + placa + ", modelo=" + modelo
                 + ", registros=" + registros + "]";
     }
 

@@ -2,8 +2,8 @@ package com.estacionamento.app.entities.auxiliares;
 
 public enum TipoVeiculo {
 
-    moto(0),
-    carro(1);
+    MOTO(0),
+    CARRO(1);
 
     private final Integer tipo;
 

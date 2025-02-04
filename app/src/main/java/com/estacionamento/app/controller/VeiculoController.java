@@ -8,37 +8,37 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.estacionamento.app.entities.Veiculo;
+import com.estacionamento.app.dto.VeiculoDTO;
 import com.estacionamento.app.service.VeiculoService;
 
 @Controller
 public class VeiculoController {
-
+//veiculo tipo está retornando como nulo
     @Autowired
     private VeiculoService service;
 
     @QueryMapping
-    public List<Veiculo> veiculos(){
+    public List<VeiculoDTO> veiculos(){
         return service.findAll();
     }
 
     @QueryMapping
-    public Veiculo veiculoPorId(@Argument Long id){
+    public VeiculoDTO veiculoPorId(@Argument Long id){
         return service.findById(id);
     }
 
     @QueryMapping
-    public Veiculo veiculoPorPlaca(@Argument String placa){
+    public VeiculoDTO veiculoPorPlaca(@Argument String placa){
         return service.findByPlaca(placa);
     }
 
     @MutationMapping
-    public Veiculo criarVeiculo(@Argument Veiculo Veiculo){
+    public VeiculoDTO criarVeiculo(@Argument VeiculoDTO Veiculo){
         return service.insert(Veiculo);
     }
 
     @MutationMapping
-    public Veiculo atualizarEstadoVeiculo(@Argument Veiculo veiculo){
+    public VeiculoDTO atualizarEstadoVeiculo(@Argument VeiculoDTO veiculo){
         return service.update(veiculo);
     }
     
