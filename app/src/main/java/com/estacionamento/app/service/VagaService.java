@@ -44,11 +44,7 @@ public class VagaService {
             }
             entity.setEstadoVaga(obj.getEstadoVaga());
             entity.setSetor(obj.getSetor());
-<<<<<<< HEAD
             entity.setTipoVeiculo(obj.getTipoVaga());
-=======
-            entity.setTipoVaga(obj.getTipoVaga());
->>>>>>> 71cb4fd (adiciona exceção ResourceNotFoundException; renomeia enums para uso de constantes em maiúsculas; ajusta estado padrão da vaga; atualiza controladores e serviços para usar DTOs;)
             return new VagaDTO(repository.save(entity));
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getId());

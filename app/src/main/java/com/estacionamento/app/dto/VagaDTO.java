@@ -23,11 +23,7 @@ public class VagaDTO implements Serializable{
     public VagaDTO(Vaga vaga) {
         this.id = vaga.getId();
         this.setor = vaga.getSetor();
-<<<<<<< HEAD
         this.tipoVaga = vaga.getTipoVeiculo();
-=======
-        this.tipoVaga = vaga.getTipoVaga();
->>>>>>> 71cb4fd (adiciona exceção ResourceNotFoundException; renomeia enums para uso de constantes em maiúsculas; ajusta estado padrão da vaga; atualiza controladores e serviços para usar DTOs;)
         this.estadoVaga = vaga.getEstadoVaga();
     }
 
