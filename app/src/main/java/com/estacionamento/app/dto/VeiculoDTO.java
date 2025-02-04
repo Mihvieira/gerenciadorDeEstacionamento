@@ -24,7 +24,11 @@ public class VeiculoDTO implements Serializable{
         setCor(obj.getCor());
         setModelo(obj.getModelo());
         setPlaca(obj.getPlaca());
+<<<<<<< HEAD
         setTipo_veiculo(obj.getTipo());
+=======
+        setTipo_veiculo(obj.getTipo_veiculo());
+>>>>>>> 71cb4fd (adiciona exceção ResourceNotFoundException; renomeia enums para uso de constantes em maiúsculas; ajusta estado padrão da vaga; atualiza controladores e serviços para usar DTOs;)
     }
 
     public Long getId() {

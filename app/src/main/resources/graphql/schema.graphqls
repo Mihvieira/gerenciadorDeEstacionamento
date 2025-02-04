@@ -1,0 +1,187 @@
+# Enumerações para tipos de vaga e veículo
+enum EstadoVaga {
+  DESOCUPADA,
+  OCUPADA,
+}
+
+enum TipoVeiculo {
+  MOTO,
+  CARRO,
+}
+
+# Tipos principais
+type DadosPessoais {
+  nome: String!
+  cnpj: String!
+  endereco: Endereco!
+  telefone: String!
+}
+
+type Endereco {
+  rua: String!
+  cidade: String!
+  estado: String!
+  cep: String!
+  uf: String!
+  complemento: String
+  numero: String
+}
+
+type Estacionamento {
+  id: ID!
+  dadosPessoais: DadosPessoais!
+  qtdMaxMotos: Int!
+  qtdMaxCarros: Int!
+}
+
+# Tipos principais
+type Veiculo {
+  id: ID!
+  placa: String!
+  modelo: String!
+  cor: String!
+  tipoVeiculo: String!
+  registros: [Registro]
+}
+
+#Tipos principais
+type Vaga {
+  id: ID!
+  setor: String!
+  tipoVaga: TipoVeiculo!
+  estadoVaga: EstadoVaga!
+  registros: [Registro]
+}
+
+# Tipos principais
+type Registro {
+  id: ID!
+  vaga: Vaga!
+  veiculo: Veiculo!
+  entrada: String!
+  saida: String
+}
+
+# Tipos de entrada
+input DadosPessoaisInput {
+  nome: String!
+  cnpj: String!
+  endereco: EnderecoInput!
+  telefone: String!
+}
+
+input EnderecoInput {
+  rua: String!
+  cidade: String!
+  estado: String!
+  cep: String!
+  uf: String!
+  complemento: String
+  numero: String
+}
+
+input EstacionamentoInput {
+  dadosPessoais: DadosPessoaisInput!
+  qtdMaxMotos: Int!
+  qtdMaxCarros: Int!
+}
+
+input AtualizarEstacionamentoInput {
+  id: ID!
+  dadosPessoais: DadosPessoaisInput!
+  qtdMaxMotos: Int!
+  qtdMaxCarros: Int!
+}
+
+# Tipos de entrada
+input VeiculoInput {
+  placa: String!
+  modelo: String!
+  cor: String!
+  tipoVeiculo: TipoVeiculo!
+}
+
+input AtualizarVeiculoInput {
+  id: ID!
+  placa: String!
+  modelo: String!
+  cor: String!
+  tipoVeiculo: TipoVeiculo!
+}
+
+# Tipos de entrada
+input VagaInput {
+  setor: String!
+  tipoVaga: TipoVeiculo!
+}
+
+input AtualizarEstadoVagaInput {
+  id: ID!
+  estadoVaga: EstadoVaga!
+}
+
+input AtualizarVagaInput {
+  id: ID!
+  setor: String!
+  tipoVaga: TipoVeiculo!
+  estadoVaga: EstadoVaga!
+}
+
+# Tipos de entrada
+input RegistroInput {
+  entrada: String!
+  saida: String
+  vagaId: ID!
+  veiculoId: ID!
+}
+
+input RegistrarSaidaInput {
+  id: ID!
+  saida: String
+}
+
+input AtualizarRegistroInput {
+  id: ID!
+  entrada: String!
+  saida: String
+  vagaId: ID!
+  veiculoId: ID!
+}
+
+# Consultas para buscar dados
+type Query{
+  estacionamentos: [Estacionamento!]!
+  estacionamentoPorId(id: ID!): Estacionamento
+
+  veiculos: [Veiculo!]!
+  veiculoPorId(id: ID!): Veiculo
+  veiculoPorPlaca(placa: String!): Veiculo
+
+  vagas: [Vaga!]!
+  vagaPorId(id: ID!): Vaga
+
+  registros: [Registro!]!
+  registroPorId(id: ID!): Registro
+  registroPorData(data: String!): [Registro!]!
+}
+
+# Mutations para criar, atualizar e excluir dados
+type Mutation{
+  criarEstacionamento(input: EstacionamentoInput!): Estacionamento!
+  atualizarEstacionamento(input: AtualizarEstacionamentoInput!): Estacionamento!
+  excluirEstacionamento(id: ID!): Boolean!
+
+  criarVeiculo(input: VeiculoInput): Veiculo!
+  excluirVeiculo(id: ID!): Boolean!
+  atualizarVeiculo(input: AtualizarVeiculoInput): Veiculo!
+
+  criarVaga(input: VagaInput): Vaga!
+  excluirVaga(id: ID!): Boolean!
+  atualizarVaga(input: AtualizarVagaInput): Vaga!
+  atualizarEstadoVaga(input: AtualizarEstadoVagaInput): Vaga!
+
+  criarRegistro(input: RegistroInput): Registro!
+  excluirRegistro(id: ID!): Boolean!
+  incluirSaidaRegistro(input: RegistrarSaidaInput!): Registro!
+  atualizarRegistro(input: AtualizarRegistroInput!): Registro!
+}

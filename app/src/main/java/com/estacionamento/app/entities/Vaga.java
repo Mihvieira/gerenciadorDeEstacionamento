@@ -42,7 +42,11 @@ public class Vaga implements Serializable{
 
     public Vaga(String setor, TipoVeiculo tipo) {
         this.setor = setor;
+<<<<<<< HEAD
         this.tipoVeiculo = tipo;
+=======
+        this.tipoVaga = tipo;
+>>>>>>> 71cb4fd (adiciona exceção ResourceNotFoundException; renomeia enums para uso de constantes em maiúsculas; ajusta estado padrão da vaga; atualiza controladores e serviços para usar DTOs;)
         this.estadoVaga = EstadoVaga.DESOCUPADA;
     }
 
