@@ -34,13 +34,14 @@ public class Vaga implements Serializable{
     @Enumerated(EnumType.STRING)
     private TipoVeiculo tipoVaga;
     @Enumerated(EnumType.STRING)
-    private EstadoVaga estadoVaga = EstadoVaga.Desocupada; //valor padrão
+    private EstadoVaga estadoVaga;
     @OneToMany(mappedBy = "vaga")
     private List<Registro> registros = new ArrayList<>();
 
     public Vaga(String setor, TipoVeiculo tipo) {
         this.setor = setor;
-        setTipoVaga(tipo);
+        this.tipoVaga = tipo;
+        this.estadoVaga = EstadoVaga.DESOCUPADA;
     }
 
     public Long getId() {

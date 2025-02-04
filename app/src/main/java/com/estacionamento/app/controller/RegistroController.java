@@ -31,13 +31,18 @@ public class RegistroController{
         return service.findById(id);
     }
 
+    @QueryMapping
+    public Registro registroPorData(@Argument String data){
+        return service.findByDate(data);
+    }
+
     @MutationMapping
     public Registro criarRegistro(@Argument Registro Registro){
         return service.insert(Registro);
     }
 
     @MutationMapping
-    public Registro atualizarEstadoRegistro(@Argument Long id, @Argument Instant saida){
+    public Registro atualizarRegistro(@Argument Long id, @Argument Instant saida){
         return service.update(id, saida);
     }
     

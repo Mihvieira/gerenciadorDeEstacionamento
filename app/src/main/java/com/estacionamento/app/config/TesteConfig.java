@@ -37,18 +37,18 @@ public class TesteConfig implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        Vaga vaga1 = new Vaga("A", TipoVeiculo.carro);
-        Vaga vaga2 = new Vaga("B", TipoVeiculo.carro);
-        Vaga vaga3 = new Vaga("C", TipoVeiculo.moto);
+        Vaga vaga1 = new Vaga("A", TipoVeiculo.CARRO);
+        Vaga vaga2 = new Vaga("B", TipoVeiculo.CARRO);
+        Vaga vaga3 = new Vaga("C", TipoVeiculo.MOTO);
         vagaRepository.saveAll(Arrays.asList(vaga1, vaga2, vaga3));
         Endereco endereco = new Endereco("rua tal", "privareva", "766666", "exemplo", "RO", null, "12-B");
         DadosPessoais dados = new DadosPessoais("empresaNome", "123456", endereco, "123");
         Estacionamento estacionamento = new Estacionamento(null, dados, 10, 10);
         estacionamentoRepository.save(estacionamento);
-        Veiculo veiculo1 = new Veiculo(TipoVeiculo.carro, "azul","a123", "Exemplo");
-        Veiculo veiculo2 = new Veiculo(TipoVeiculo.carro, "azul", "a124", "Exemplo");
-        Veiculo veiculo3 = new Veiculo(TipoVeiculo.carro, "azul", "a125", "Exemplo");
-        Veiculo veiculo4 = new Veiculo(TipoVeiculo.moto, "azul", "a126", "Exemplo");
+        Veiculo veiculo1 = new Veiculo(TipoVeiculo.CARRO, "azul","a123", "Exemplo");
+        Veiculo veiculo2 = new Veiculo(TipoVeiculo.CARRO, "azul", "a124", "Exemplo");
+        Veiculo veiculo3 = new Veiculo(TipoVeiculo.CARRO, "azul", "a125", "Exemplo");
+        Veiculo veiculo4 = new Veiculo(TipoVeiculo.MOTO, "azul", "a126", "Exemplo");
         veiculoRepository.saveAll(Arrays.asList(veiculo1, veiculo2, veiculo3, veiculo4));    
         
     }

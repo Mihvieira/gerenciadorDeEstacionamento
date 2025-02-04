@@ -2,8 +2,8 @@ package com.estacionamento.app.entities.auxiliares;
 
 public enum EstadoVaga {
 
-    Desocupada(0),
-    Ocupada(1);
+    DESOCUPADA(0),
+    OCUPADA(1);
 
     private Integer estado;
 
