@@ -1,5 +1,6 @@
 package com.estacionamento.app.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +18,21 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tb_veiculo")
 @AllArgsConstructor
 @Getter
+@Setter
 public class Veiculo implements Serializable{
-    private static final Long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Setter
     @Enumerated(EnumType.STRING)
     private TipoVeiculo tipo;
     private String cor;
@@ -60,11 +65,6 @@ public class Veiculo implements Serializable{
         return this.tipo;
     }
 
-    public void setTipo(TipoVeiculo tipo_veiculo) {
-        this.tipo = tipo_veiculo;
-       
-    }
-
     public String getCor() {
         return cor;
     }
@@ -95,8 +95,12 @@ public class Veiculo implements Serializable{
         return registros;
     }
 
-    public void setRegistros(List<Registro> registros) {
-        this.registros = registros;
+    public void setRegistros(List<Registro> novosRegistros) {
+        if (novosRegistros == null) {
+            throw new IllegalArgumentException("A lista de registros não pode ser nula");
+        }
+        // Cópia defensiva para proteger a lista interna
+        this.registros = new ArrayList<>(novosRegistros);
     }
 
     @Override
@@ -117,11 +121,8 @@ public class Veiculo implements Serializable{
             return false;
         Veiculo other = (Veiculo) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 
     @Override

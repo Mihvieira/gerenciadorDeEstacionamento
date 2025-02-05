@@ -15,37 +15,40 @@ import com.estacionamento.app.service.VagaService;
 @Controller
 public class VagaController{
 
-    @Autowired
-    private VagaService service;
+    private final VagaService service;
+
+    public VagaController(VagaService service) {
+        this.service = service;
+    }
 
     @QueryMapping
     public List<VagaDTO> vagas(){
-        return service.findAll();
+        return this.service.findAll();
     }
 
     @QueryMapping
     public VagaDTO vagaPorId(@Argument Long id){
-        return service.findById(id);
+        return this.service.findById(id);
     }
 
     @MutationMapping
     public VagaDTO criarVaga(@Argument VagaDTO vaga){
-        return service.insert(vaga);
+        return this.service.insert(vaga);
     }
 
     @MutationMapping
     public VagaDTO atualizarEstadoVaga(@Argument Long id, @Argument EstadoVaga estadoVaga){
-        return service.update(id, estadoVaga);
+        return this.service.update(id, estadoVaga);
     }
 
     @MutationMapping
     public VagaDTO atualizarVaga(@Argument VagaDTO vaga){
-        return service.insert(vaga);
+        return this.service.insert(vaga);
     }
 
     @MutationMapping
     public void excluirVaga(@Argument Long id){
-        service.delete(id);
+        this.service.delete(id);
     }
 
 }

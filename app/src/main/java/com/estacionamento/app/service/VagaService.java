@@ -25,7 +25,7 @@ public class VagaService {
 
     public List<VagaDTO> findAll(){
         List<Vaga> entity = repository.findAll();
-        return entity.stream().map(x -> new VagaDTO(x)).collect(Collectors.toList());
+        return entity.stream().map(VagaDTO::new).collect(Collectors.toList());
     }
 
     public VagaDTO findById(Long id) {

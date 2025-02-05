@@ -8,7 +8,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.estacionamento.app.entities.Registro;
+import com.estacionamento.app.dto.RegistroDTO;
 import com.estacionamento.app.service.RegistroService;
 
 
@@ -22,33 +22,38 @@ public class RegistroController{
     }
 
     @QueryMapping
-    public List<Registro> registros(){
+    public List<RegistroDTO> registros(){
         return service.findAll();
     }
 
     @QueryMapping
-    public Registro registroPorId(@Argument Long id){
+    public RegistroDTO registroPorId(@Argument Long id){
         return service.findById(id);
     }
 
     @QueryMapping
-    public Registro registroPorData(@Argument String data){
+    public RegistroDTO registroPorData(@Argument String data){
         return service.findByDate(data);
     }
 
     @MutationMapping
-    public Registro criarRegistro(@Argument Registro Registro){
+    public RegistroDTO criarRegistro(@Argument RegistroDTO Registro){
         return service.insert(Registro);
     }
 
     @MutationMapping
-    public Registro incluirSaidaRegistro(@Argument Long id, @Argument Instant saida){
+    public RegistroDTO incluirSaidaRegistro(@Argument Long id, @Argument Instant saida){
         return service.update(id, saida);
     }
-    
+
+    @MutationMapping
+    public RegistroDTO atualizarRegistro(@Argument RegistroDTO Registro){
+        return service.insert(Registro);
+    }
+
     @MutationMapping
     public void excluirRegistro(@Argument Long id){
-        service.delete(id);
+        this.service.delete(id);;
     }
 
 }

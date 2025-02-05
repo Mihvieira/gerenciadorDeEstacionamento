@@ -1,5 +1,6 @@
 package com.estacionamento.app.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -10,10 +11,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 @Entity
 @Table(name = "tb_registro")
+@Getter
 public class Registro implements Serializable{
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

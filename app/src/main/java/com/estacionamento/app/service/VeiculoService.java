@@ -24,7 +24,7 @@ public class VeiculoService {
 
     public List<VeiculoDTO> findAll(){
         List<Veiculo> entities = repository.findAll();
-        return entities.stream().map(x -> new VeiculoDTO(x)).collect(Collectors.toList());
+        return entities.stream().map(VeiculoDTO::new).collect(Collectors.toList());
     }
 
     public VeiculoDTO findById(Long id) {
@@ -62,6 +62,7 @@ public class VeiculoService {
         return insert(new VeiculoDTO(Veiculo));
     }
 
+    @Transactional
     public void delete(Long id){
         repository.deleteById(id);
     }

@@ -1,5 +1,6 @@
 package com.estacionamento.app.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class Vaga implements Serializable{
-    private static final Long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

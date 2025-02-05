@@ -2,6 +2,7 @@ package com.estacionamento.app.controller;
 
 import java.util.List;
 
+import com.estacionamento.app.dto.EstacionamentoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -14,31 +15,35 @@ import com.estacionamento.app.service.EstacionamentoService;
 @Controller
 public class EstacionamentoController {
 //dados pessoais está sendo devolvido como null
-    @Autowired
-    private EstacionamentoService service;
 
-    @QueryMapping
-    public List<Estacionamento> estacionamentos(){
-        return service.findAll();
+    private final EstacionamentoService service;
+
+    public EstacionamentoController(EstacionamentoService service) {
+        this.service = service;
     }
 
     @QueryMapping
-    public Estacionamento estacionamentoPorId(@Argument Long id){
-        return service.findById(id);
+    public List<EstacionamentoDTO> estacionamentos(){
+        return this.service.findAll();
     }
 
     @QueryMapping
-    public Estacionamento atualizarEstacionamento(@Argument Long id){
+    public EstacionamentoDTO estacionamentoPorId(@Argument Long id){
         return service.findById(id);
     }
 
     @MutationMapping
-    public Estacionamento criarEstacionamento(@Argument Estacionamento Estacionamento){
-        return service.insert(Estacionamento);
+    public EstacionamentoDTO atualizarEstacionamento(@Argument EstacionamentoDTO Estacionamento){
+        return this.service.insert(Estacionamento);
+    }
+
+    @MutationMapping
+    public EstacionamentoDTO criarEstacionamento(@Argument EstacionamentoDTO Estacionamento){
+        return this.service.insert(Estacionamento);
     }
 
     @MutationMapping
     public void excluirEstacionamento(@Argument Long id){
-        service.delete(id);
+        this.service.delete(id);
     }
 }

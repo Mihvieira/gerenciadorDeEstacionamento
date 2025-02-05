@@ -1,8 +1,18 @@
 package com.estacionamento.app.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.estacionamento.app.dto.EstacionamentoDTO;
+import com.estacionamento.app.dto.VagaDTO;
+import com.estacionamento.app.entities.Vaga;
+import com.estacionamento.app.entities.auxiliares.EstadoVaga;
+import com.estacionamento.app.service.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 
 import com.estacionamento.app.entities.Estacionamento;
@@ -14,22 +24,44 @@ public class EstacionamentoService {
     @Autowired
     private EstacionamentoRepository repository;
 
-    public List<Estacionamento> findAll(){
-        return repository.findAll();
+    public List<EstacionamentoDTO> findAll(){
+        List<Estacionamento> entity = repository.findAll();
+        return entity.stream().map(EstacionamentoDTO::new).collect(Collectors.toList());
     }
 
-    public Estacionamento insert(Estacionamento Estacionamento) {
-        return repository.save(Estacionamento);
+    public EstacionamentoDTO findById(Long id) {
+        Estacionamento entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
+        return new EstacionamentoDTO(entity);
     }
 
-    public Estacionamento findById(Long id) {
-        return repository.findById(id).get();
+    @Transactional
+    public EstacionamentoDTO insert(EstacionamentoDTO obj) {
+        try {
+            Estacionamento entity = new Estacionamento();
+            if (obj.getId() != null) {
+                entity.setId(obj.getId());
+            }
+            entity.setDadosEmpresa(obj.getDadosEmpresa());
+            entity.setQtdMaxCarros(obj.getQtdMaxCarros());
+            entity.setQtdMaxMotos(obj.getQtdMaxMotos());
+            return new EstacionamentoDTO(repository.save(entity));
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(obj.getId());
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException(e.getMessage());
+        }catch (HttpMessageNotReadableException e){
+            throw new RuntimeException(e.getMessage());
+        }catch (Exception e) {
+            throw new RuntimeException("Unexpected error: " + e.getMessage());
+        }
     }
 
-    public Estacionamento update(Estacionamento estacionamento) {
-        return insert(estacionamento);
+    public EstacionamentoDTO update(EstacionamentoDTO entity) {
+        return insert(entity);
     }
 
+    @Transactional
     public void delete(Long id){
         repository.deleteById(id);
     }
