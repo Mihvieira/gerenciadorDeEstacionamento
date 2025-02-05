@@ -21,7 +21,7 @@ import com.estacionamento.app.entities.Vaga;
 import com.estacionamento.app.repository.RegistroRepository;
 
 @Service
-public final class RegistroService {
+public class RegistroService {
 
     private final RegistroRepository repository;
     @Autowired
