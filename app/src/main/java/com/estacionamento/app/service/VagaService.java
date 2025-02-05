@@ -3,7 +3,6 @@ package com.estacionamento.app.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.estacionamento.app.entities.auxiliares.TipoVeiculo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -44,7 +43,7 @@ public class VagaService {
             }
             entity.setEstadoVaga(obj.getEstadoVaga());
             entity.setSetor(obj.getSetor());
-            entity.setTipoVeiculo(obj.getTipoVaga());
+            entity.setTipo(obj.getTipo());
             return new VagaDTO(repository.save(entity));
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getId());

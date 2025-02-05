@@ -14,7 +14,7 @@ public class VeiculoDTO implements Serializable{
     private static final Long serialVersionUID = 1L;
 
     private Long id;
-    private TipoVeiculo tipo_veiculo;
+    private TipoVeiculo tipo;
     private String cor;
     private String placa;
     private String modelo;
@@ -24,7 +24,7 @@ public class VeiculoDTO implements Serializable{
         setCor(obj.getCor());
         setModelo(obj.getModelo());
         setPlaca(obj.getPlaca());
-        setTipo_veiculo(obj.getTipo());
+        setTipo(obj.getTipo());
     }
 
     public Long getId() {
@@ -35,12 +35,12 @@ public class VeiculoDTO implements Serializable{
         this.id = id;
     }
 
-    public TipoVeiculo getTipo_veiculo() {
-        return tipo_veiculo;
+    public TipoVeiculo getTipo() {
+        return tipo;
     }
 
-    public void setTipo_veiculo(TipoVeiculo tipo_veiculo) {
-        this.tipo_veiculo = tipo_veiculo;
+    public void setTipo(TipoVeiculo tipo) {
+        this.tipo = tipo;
     }
 
     public String getCor() {

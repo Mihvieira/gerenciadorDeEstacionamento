@@ -42,7 +42,7 @@ public class RegistroController{
     }
 
     @MutationMapping
-    public Registro atualizarRegistro(@Argument Long id, @Argument Instant saida){
+    public Registro incluirSaidaRegistro(@Argument Long id, @Argument Instant saida){
         return service.update(id, saida);
     }
     

@@ -38,7 +38,7 @@ public class VeiculoController {
     }
 
     @MutationMapping
-    public VeiculoDTO atualizarEstadoVeiculo(@Argument VeiculoDTO veiculo){
+    public VeiculoDTO atualizarVeiculo(@Argument VeiculoDTO veiculo){
         return service.update(veiculo);
     }
     

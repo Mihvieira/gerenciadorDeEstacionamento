@@ -16,7 +16,7 @@ public class DadosPessoais implements Serializable{
     private String cnpj;
     @Embedded
     private Endereco endereco;
-    private String phone;
+    private String telefone;
 
     public DadosPessoais() {
     }
@@ -26,7 +26,7 @@ public class DadosPessoais implements Serializable{
         this.nome = nome;
         this.cnpj = cnpj;
         this.endereco = endereco;
-        this.phone = phone;
+        this.telefone = phone;
     }
 
 
@@ -63,20 +63,20 @@ public class DadosPessoais implements Serializable{
     }
 
 
-    public String getPhone() {
-        return phone;
+    public String getTelefone() {
+        return telefone;
     }
 
 
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
 
     @Override
     public String toString() {
-        return "DadosPessoais [nome=" + nome + ", cnpj=" + cnpj + ", endereco=" + endereco + ", phone=" + phone + "]";
+        return "DadosPessoais [nome=" + nome + ", cnpj=" + cnpj + ", endereco=" + endereco + ", phone=" + telefone + "]";
     }
 
 }

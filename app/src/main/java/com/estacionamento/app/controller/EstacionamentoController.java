@@ -27,6 +27,11 @@ public class EstacionamentoController {
         return service.findById(id);
     }
 
+    @QueryMapping
+    public Estacionamento atualizarEstacionamento(@Argument Long id){
+        return service.findById(id);
+    }
+
     @MutationMapping
     public Estacionamento criarEstacionamento(@Argument Estacionamento Estacionamento){
         return service.insert(Estacionamento);

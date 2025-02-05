@@ -44,7 +44,7 @@ public class VeiculoService {
             entity.setCor(obj.getCor());
             entity.setModelo(obj.getModelo());
             entity.setPlaca(obj.getPlaca());
-            entity.setTipo(obj.getTipo_veiculo());
+            entity.setTipo(obj.getTipo());
             return new VeiculoDTO(repository.save(entity));
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getId());

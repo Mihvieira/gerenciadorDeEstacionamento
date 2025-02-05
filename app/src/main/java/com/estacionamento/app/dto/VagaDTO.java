@@ -14,7 +14,7 @@ public class VagaDTO implements Serializable{
 
     private Long id;
     private String setor;
-    private TipoVeiculo tipoVaga;
+    private TipoVeiculo tipo;
     private EstadoVaga estadoVaga;
     
     public VagaDTO() {
@@ -23,13 +23,13 @@ public class VagaDTO implements Serializable{
     public VagaDTO(Vaga vaga) {
         this.id = vaga.getId();
         this.setor = vaga.getSetor();
-        this.tipoVaga = vaga.getTipoVeiculo();
+        this.tipo = vaga.getTipo();
         this.estadoVaga = vaga.getEstadoVaga();
     }
 
     public VagaDTO(String setor, TipoVeiculo tipoVaga, EstadoVaga estadoVaga) {
         this.setor = setor;
-        this.tipoVaga = tipoVaga;
+        this.tipo = tipoVaga;
         this.estadoVaga = estadoVaga;
     }
 
@@ -49,12 +49,12 @@ public class VagaDTO implements Serializable{
         this.setor = setor;
     }
 
-    public TipoVeiculo getTipoVaga() {
-        return tipoVaga;
+    public TipoVeiculo getTipo() {
+        return tipo;
     }
 
-    public void setTipoVaga(TipoVeiculo tipoVaga) {
-        this.tipoVaga = tipoVaga;
+    public void setTipo(TipoVeiculo tipo) {
+        this.tipo = tipo;
     }
 
     public EstadoVaga getEstadoVaga() {

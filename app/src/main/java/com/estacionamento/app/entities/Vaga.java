@@ -17,7 +17,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_vaga")
@@ -31,7 +30,7 @@ public class Vaga implements Serializable{
     private Long id;
     private String setor;
     @Enumerated(EnumType.STRING)
-    private TipoVeiculo tipoVeiculo;
+    private TipoVeiculo tipo;
     @Enumerated(EnumType.STRING)
     private EstadoVaga estadoVaga;
     @OneToMany(mappedBy = "vaga")
@@ -42,7 +41,7 @@ public class Vaga implements Serializable{
 
     public Vaga(String setor, TipoVeiculo tipo) {
         this.setor = setor;
-        this.tipoVeiculo = tipo;
+        this.tipo = tipo;
         this.estadoVaga = EstadoVaga.DESOCUPADA;
     }
 
@@ -62,12 +61,12 @@ public class Vaga implements Serializable{
         this.setor = setor;
     }
 
-    public TipoVeiculo getTipoVeiculo() {
-        return this.tipoVeiculo;
+    public TipoVeiculo getTipo() {
+        return this.tipo;
     }
 
-    public void setTipoVeiculo(TipoVeiculo tipo) {
-            this.tipoVeiculo = tipo;
+    public void setTipo(TipoVeiculo tipo) {
+            this.tipo = tipo;
     }
 
     public List<Registro> getRegistros() {
@@ -114,7 +113,7 @@ public class Vaga implements Serializable{
 
     @Override
     public String toString() {
-        return "Vaga [id=" + id + ", setor=" + setor + ", tipo=" + tipoVeiculo + ", estado=" + getEstadoVaga() + "]";
+        return "Vaga [id=" + id + ", setor=" + setor + ", tipo=" + tipo + ", estado=" + getEstadoVaga() + "]";
     }
 
 

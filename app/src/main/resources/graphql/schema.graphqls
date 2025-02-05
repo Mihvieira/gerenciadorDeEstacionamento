@@ -2,20 +2,20 @@
 
 enum EstadoVaga {
   DESOCUPADA,
-  OCUPADA,
+  OCUPADA
 }
 
 enum TipoVeiculo {
   MOTO,
-  CARRO,
+  CARRO
 }
 
 # Tipos principais
 type Endereco {
-  rua: String!
+  logradouro: String!
+  bairro: String!
+  cep: String
   cidade: String!
-  estado: String!
-  cep: String!
   uf: String!
   complemento: String
   numero: String
@@ -24,13 +24,13 @@ type Endereco {
 type DadosPessoais {
   nome: String!
   cnpj: String!
-  endereco: Endereco!
+  endereco: [Endereco!]!
   telefone: String!
 }
 
 type Estacionamento {
   id: ID!
-  dadosPessoais: DadosPessoais!
+  dadosEmpresa: DadosPessoais!
   qtdMaxMotos: Int!
   qtdMaxCarros: Int!
 }
@@ -48,7 +48,7 @@ type Veiculo {
   placa: String!
   modelo: String!
   cor: String!
-  tipoVeiculo: TipoVeiculo!
+  tipo: TipoVeiculo!
   registros: [Registro]
 }
 
@@ -56,17 +56,17 @@ type Veiculo {
 type Vaga {
   id: ID!
   setor: String!
-  tipoVaga: TipoVeiculo!
+  tipo: TipoVeiculo!
   estadoVaga: EstadoVaga!
   registros: [Registro]
 }
 
 # Tipos de entrada
 input EnderecoInput {
-  rua: String!
+  logradouro: String!
+  bairro: String!
+  cep: String
   cidade: String!
-  estado: String!
-  cep: String!
   uf: String!
   complemento: String
   numero: String
@@ -75,19 +75,23 @@ input EnderecoInput {
 input DadosPessoaisInput {
   nome: String!
   cnpj: String!
-  endereco: EnderecoInput!
+  endereco: [EnderecoInput!]!
   telefone: String!
 }
 
 input EstacionamentoInput {
-  dadosPessoais: DadosPessoaisInput!
+  id: ID!
+  dadosEmpresa: DadosPessoaisInput!
   qtdMaxMotos: Int!
   qtdMaxCarros: Int!
 }
 
 input AtualizarEstacionamentoInput {
   id: ID!
-  dadosPessoais: DadosPessoaisInput!
+  nome: String!
+  cnpj: String!
+  endereco: [EnderecoInput!]!
+  telefone: String!
   qtdMaxMotos: Int!
   qtdMaxCarros: Int!
 }
@@ -97,7 +101,7 @@ input VeiculoInput {
   placa: String!
   modelo: String!
   cor: String!
-  tipoVeiculo: TipoVeiculo!
+  tipo: TipoVeiculo!
 }
 
 input AtualizarVeiculoInput {
@@ -105,13 +109,13 @@ input AtualizarVeiculoInput {
   placa: String!
   modelo: String!
   cor: String!
-  tipoVeiculo: TipoVeiculo!
+  tipo: TipoVeiculo!
 }
 
 # Tipos de entrada
 input VagaInput {
   setor: String!
-  tipoVaga: TipoVeiculo!
+  tipo: TipoVeiculo!
 }
 
 input AtualizarEstadoVagaInput {
@@ -122,7 +126,7 @@ input AtualizarEstadoVagaInput {
 input AtualizarVagaInput {
   id: ID!
   setor: String!
-  tipoVaga: TipoVeiculo!
+  tipo: TipoVeiculo!
   estadoVaga: EstadoVaga!
 }
 
