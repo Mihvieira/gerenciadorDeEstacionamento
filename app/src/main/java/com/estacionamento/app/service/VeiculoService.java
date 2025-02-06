@@ -68,8 +68,8 @@ public class VeiculoService {
     }
 
     public VeiculoDTO findByPlaca(String placa) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByPlaca'");
+        Veiculo Veiculo = repository.findByPlaca(placa).get();
+        return new VeiculoDTO(Veiculo);
     }
 
 

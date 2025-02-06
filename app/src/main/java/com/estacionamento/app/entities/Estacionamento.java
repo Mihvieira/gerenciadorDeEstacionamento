@@ -3,6 +3,7 @@ package com.estacionamento.app.entities;
 import java.io.Serial;
 import java.io.Serializable;
 import com.estacionamento.app.entities.auxiliares.DadosPessoais;
+import com.estacionamento.app.entities.auxiliares.Endereco;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -26,11 +27,15 @@ public class Estacionamento implements Serializable{
     private Long id;
     @Embedded
     private DadosPessoais dadosEmpresa;
+    @Embedded
+    private Endereco endereco;
     private Integer qtdMaxMotos;
     private Integer qtdMaxCarros;
 
-    public Estacionamento(DadosPessoais dadosEmpresa, Integer qtdMaxMotos, Integer qtdMaxCarros) {
+
+    public Estacionamento(DadosPessoais dadosEmpresa, Endereco endereco, Integer qtdMaxMotos, Integer qtdMaxCarros) {
         this.dadosEmpresa = dadosEmpresa;
+        this.endereco = endereco;
         this.qtdMaxMotos = qtdMaxMotos;
         this.qtdMaxCarros = qtdMaxCarros;
     }
@@ -65,6 +70,14 @@ public class Estacionamento implements Serializable{
 
     public void setDadosEmpresa(DadosPessoais dadosEmpresa) {
         this.dadosEmpresa = dadosEmpresa;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     @Override

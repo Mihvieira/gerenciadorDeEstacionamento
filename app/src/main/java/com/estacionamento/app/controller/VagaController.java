@@ -44,13 +44,15 @@ public class VagaController{
     }
 
     @MutationMapping
-    public VagaDTO atualizarVaga(@Arguments VagaDTO vaga){
+    public VagaDTO atualizarVaga(@Argument Long id, @Argument String setor, @Argument TipoVeiculo tipo, @Argument EstadoVaga estadoVaga){
+        var vaga = new VagaDTO(id, setor, tipo, estadoVaga);
         return this.service.insert(vaga);
     }
 
     @MutationMapping
-    public void excluirVaga(@Argument Long id){
+    public Boolean excluirVaga(@Argument Long id){
         this.service.delete(id);
+        return true;
     }
 
 }

@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.estacionamento.app.dto.EstacionamentoDTO;
-import com.estacionamento.app.dto.VagaDTO;
-import com.estacionamento.app.entities.Vaga;
-import com.estacionamento.app.entities.auxiliares.EstadoVaga;
 import com.estacionamento.app.service.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -45,7 +42,8 @@ public class EstacionamentoService {
             entity.setDadosEmpresa(obj.getDadosEmpresa());
             entity.setQtdMaxCarros(obj.getQtdMaxCarros());
             entity.setQtdMaxMotos(obj.getQtdMaxMotos());
-            return new EstacionamentoDTO(repository.save(entity));
+            var savedEntity = repository.save(entity);
+            return new EstacionamentoDTO(savedEntity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getId());
         } catch (DataIntegrityViolationException e){

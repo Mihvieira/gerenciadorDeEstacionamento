@@ -164,21 +164,21 @@ type Query{
 
 # Mutations para criar, atualizar e excluir dados
 type Mutation{
-  criarEstacionamento(input: EstacionamentoInput!): Estacionamento!
+  criarEstacionamento(id: ID, dadosEmpresa: DadosPessoaisInput!, qtdMaxMotos: Int!, qtdMaxCarros: Int!): Estacionamento!
   atualizarEstacionamento(input: EstacionamentoInput): Estacionamento!
   excluirEstacionamento(id: ID!): Boolean!
 
-  criarVeiculo(input: VeiculoInput): Veiculo!
+  criarVeiculo(placa: String!, modelo: String!, cor: String!, tipo: TipoVeiculo!): Veiculo!
   excluirVeiculo(id: ID!): Boolean!
-  atualizarVeiculo(input: AtualizarVeiculoInput): Veiculo!
+  atualizarVeiculo(id: ID!, placa: String!, modelo: String!, cor: String!, tipo: TipoVeiculo!): Veiculo!
 
   criarVaga(setor: String!, tipo: TipoVeiculo!, estadoVaga: EstadoVaga!): Vaga
   excluirVaga(id: ID!): Boolean!
-  atualizarVaga(input: AtualizarVagaInput!): Vaga
-  atualizarEstadoVaga(input: AtualizarEstadoVagaInput!): Vaga
+  atualizarVaga(id: ID!, setor: String!, tipo: TipoVeiculo!, estadoVaga: EstadoVaga!): Vaga
+  atualizarEstadoVaga(id: ID!, estadoVaga: EstadoVaga!): Vaga
 
-  criarRegistro(input: RegistroInput): Registro!
+  criarRegistro(entrada: String!, saida: String, vaga_id: ID!, veiculo_id: ID!): Registro!
   excluirRegistro(id: ID!): Boolean!
-  incluirSaidaRegistro(input: RegistrarSaidaInput!): Registro!
-  atualizarRegistro(input: AtualizarRegistroInput!): Registro!
+  incluirSaidaRegistro(id: ID!, saida: String): Registro!
+  atualizarRegistro(id: ID!, entrada: String!, saida: String, vaga_id: ID!, veiculo_id: ID!): Registro!
 }

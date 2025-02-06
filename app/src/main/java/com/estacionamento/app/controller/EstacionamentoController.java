@@ -3,13 +3,15 @@ package com.estacionamento.app.controller;
 import java.util.List;
 
 import com.estacionamento.app.dto.EstacionamentoDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.estacionamento.app.entities.auxiliares.DadosPessoais;
+import com.estacionamento.app.entities.auxiliares.Endereco;
+
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.Arguments;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.estacionamento.app.entities.Estacionamento;
 import com.estacionamento.app.service.EstacionamentoService;
 
 @Controller
@@ -22,27 +24,34 @@ public class EstacionamentoController {
     }
 
     @QueryMapping
-    public List<EstacionamentoDTO> estacionamentos(){
+    public List<EstacionamentoDTO> estacionamentos() {
         return this.service.findAll();
     }
 
     @QueryMapping
-    public EstacionamentoDTO estacionamentoPorId(@Argument Long id){
+    public EstacionamentoDTO estacionamentoPorId(@Argument Long id) {
         return service.findById(id);
     }
 
     @MutationMapping
-    public EstacionamentoDTO atualizarEstacionamento(@Argument EstacionamentoDTO Estacionamento){
-        return this.service.insert(Estacionamento);
+    public EstacionamentoDTO criarEstacionamento(@Argument Long id, @Arguments DadosPessoais dadosEmpresa,
+            @Arguments Endereco endereco, @Argument Integer qtdMaxMotos,
+            @Argument Integer qtdMaxCarros) {
+        var estacionamento = new EstacionamentoDTO(null, dadosEmpresa, endereco, qtdMaxMotos, qtdMaxCarros);
+        return this.service.insert(estacionamento);
     }
 
     @MutationMapping
-    public EstacionamentoDTO criarEstacionamento(@Argument EstacionamentoDTO Estacionamento){
-        return this.service.insert(Estacionamento);
+    public EstacionamentoDTO atualizarEstacionamento(@Argument Long id, @Arguments DadosPessoais dadosEmpresa,
+    @Arguments Endereco endereco, @Argument Integer qtdMaxMotos,
+    @Argument Integer qtdMaxCarros) {
+        var estacionamento = new EstacionamentoDTO(id, dadosEmpresa, endereco, qtdMaxMotos, qtdMaxCarros);
+        return this.service.insert(estacionamento);
     }
 
     @MutationMapping
-    public void excluirEstacionamento(@Argument Long id){
+    public Boolean excluirEstacionamento(@Argument Long id) {
         this.service.delete(id);
+        return true;
     }
 }
