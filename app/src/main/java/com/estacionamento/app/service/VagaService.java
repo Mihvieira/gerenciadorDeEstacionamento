@@ -40,8 +40,8 @@ public class VagaService {
             Vaga entity = new Vaga();
             if (obj.getId() != null) {
                 entity.setId(obj.getId());
+                entity.setEstadoVaga(obj.getEstadoVaga());
             }
-            entity.setEstadoVaga(obj.getEstadoVaga());
             entity.setSetor(obj.getSetor());
             entity.setTipo(obj.getTipo());
             return new VagaDTO(repository.save(entity));

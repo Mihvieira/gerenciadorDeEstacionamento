@@ -1,5 +1,6 @@
 package com.estacionamento.app.dto;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import com.estacionamento.app.entities.Estacionamento;
@@ -10,8 +11,9 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class EstacionamentoDTO implements Serializable{
-    private static final Long serialVersionUID = 1L;
+public class EstacionamentoInput implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private DadosPessoais dadosEmpresa;
@@ -19,8 +21,10 @@ public class EstacionamentoDTO implements Serializable{
     private Integer qtdMaxCarros;
 
 
-    public EstacionamentoDTO(Estacionamento obj) {
-        setId(obj.getId());
+    public EstacionamentoInput(Estacionamento obj) {
+        if (obj.getId()!=null){
+            setId(obj.getId());
+        }
         setQtdMaxCarros(obj.getQtdMaxCarros());
         setQtdMaxMotos(obj.getQtdMaxMotos());
         setDadosEmpresa(obj.getDadosEmpresa());

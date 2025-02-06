@@ -1,4 +1,7 @@
-# Enumerações para tipos de vaga e veículo
+schema{
+  query: Query
+  mutation: Mutation
+}
 
 enum EstadoVaga {
   DESOCUPADA,
@@ -24,21 +27,22 @@ type Endereco {
 type DadosPessoais {
   nome: String!
   cnpj: String!
-  endereco: [Endereco!]!
   telefone: String!
 }
 
+union dadosEmpresa = DadosPessoais | Endereco
+
 type Estacionamento {
   id: ID!
-  dadosEmpresa: DadosPessoais!
+  dadosEmpresa: dadosEmpresa!
   qtdMaxMotos: Int!
   qtdMaxCarros: Int!
 }
 
 type Registro {
   id: ID!
-  vaga: Vaga!
-  veiculo: Veiculo!
+  vaga_id: ID!
+  veiculo_id: ID!
   entrada: String!
   saida: String
 }
@@ -49,7 +53,6 @@ type Veiculo {
   modelo: String!
   cor: String!
   tipo: TipoVeiculo!
-  registros: [Registro]
 }
 
 #Tipos principais
@@ -58,7 +61,6 @@ type Vaga {
   setor: String!
   tipo: TipoVeiculo!
   estadoVaga: EstadoVaga!
-  registros: [Registro]
 }
 
 # Tipos de entrada
@@ -80,21 +82,12 @@ input DadosPessoaisInput {
 }
 
 input EstacionamentoInput {
-  id: ID!
+  id: ID
   dadosEmpresa: DadosPessoaisInput!
   qtdMaxMotos: Int!
   qtdMaxCarros: Int!
 }
 
-input AtualizarEstacionamentoInput {
-  id: ID!
-  nome: String!
-  cnpj: String!
-  endereco: [EnderecoInput!]!
-  telefone: String!
-  qtdMaxMotos: Int!
-  qtdMaxCarros: Int!
-}
 
 # Tipos de entrada
 input VeiculoInput {
@@ -116,6 +109,7 @@ input AtualizarVeiculoInput {
 input VagaInput {
   setor: String!
   tipo: TipoVeiculo!
+  estadoVaga: EstadoVaga!
 }
 
 input AtualizarEstadoVagaInput {
@@ -134,8 +128,8 @@ input AtualizarVagaInput {
 input RegistroInput {
   entrada: String!
   saida: String
-  vagaId: ID!
-  veiculoId: ID!
+  vaga_id: ID!
+  veiculo_id: ID!
 }
 
 input RegistrarSaidaInput {
@@ -147,8 +141,8 @@ input AtualizarRegistroInput {
   id: ID!
   entrada: String!
   saida: String
-  vagaId: ID!
-  veiculoId: ID!
+  vaga_id: ID!
+  veiculo_id: ID!
 }
 
 # Consultas para buscar dados
@@ -171,17 +165,17 @@ type Query{
 # Mutations para criar, atualizar e excluir dados
 type Mutation{
   criarEstacionamento(input: EstacionamentoInput!): Estacionamento!
-  atualizarEstacionamento(input: AtualizarEstacionamentoInput!): Estacionamento!
+  atualizarEstacionamento(input: EstacionamentoInput): Estacionamento!
   excluirEstacionamento(id: ID!): Boolean!
 
   criarVeiculo(input: VeiculoInput): Veiculo!
   excluirVeiculo(id: ID!): Boolean!
   atualizarVeiculo(input: AtualizarVeiculoInput): Veiculo!
 
-  criarVaga(input: VagaInput): Vaga!
+  criarVaga(setor: String!, tipo: TipoVeiculo!, estadoVaga: EstadoVaga!): Vaga
   excluirVaga(id: ID!): Boolean!
-  atualizarVaga(input: AtualizarVagaInput): Vaga!
-  atualizarEstadoVaga(input: AtualizarEstadoVagaInput): Vaga!
+  atualizarVaga(input: AtualizarVagaInput!): Vaga
+  atualizarEstadoVaga(input: AtualizarEstadoVagaInput!): Vaga
 
   criarRegistro(input: RegistroInput): Registro!
   excluirRegistro(id: ID!): Boolean!

@@ -1,24 +1,27 @@
 package com.estacionamento.app.dto;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import com.estacionamento.app.entities.Vaga;
 import com.estacionamento.app.entities.auxiliares.EstadoVaga;
 import com.estacionamento.app.entities.auxiliares.TipoVeiculo;
 
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Data
 public class VagaDTO implements Serializable{
-    private static final Long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String setor;
     private TipoVeiculo tipo;
     private EstadoVaga estadoVaga;
-    
-    public VagaDTO() {
-    }
 
     public VagaDTO(Vaga vaga) {
         this.id = vaga.getId();
