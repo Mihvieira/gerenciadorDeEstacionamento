@@ -1,3 +1,8 @@
+scalar DateTime
+  @specifiedBy(url: 
+    "https://scalars.graphql.org/andimarek/date-time.html"
+  )
+
 schema{
   query: Query
   mutation: Mutation
@@ -30,21 +35,20 @@ type DadosPessoais {
   telefone: String!
 }
 
-union dadosEmpresa = DadosPessoais | Endereco
-
 type Estacionamento {
   id: ID!
-  dadosEmpresa: dadosEmpresa!
+  dadosEmpresa: DadosPessoais!
+  endereco: Endereco!
   qtdMaxMotos: Int!
   qtdMaxCarros: Int!
 }
 
 type Registro {
   id: ID!
-  vaga_id: ID!
-  veiculo_id: ID!
-  entrada: String!
-  saida: String
+  vaga_id: Int!
+  veiculo_id: Int!
+  entrada: DateTime!
+  saida: DateTime
 }
 
 type Veiculo {
@@ -77,72 +81,7 @@ input EnderecoInput {
 input DadosPessoaisInput {
   nome: String!
   cnpj: String!
-  endereco: [EnderecoInput!]!
   telefone: String!
-}
-
-input EstacionamentoInput {
-  id: ID
-  dadosEmpresa: DadosPessoaisInput!
-  qtdMaxMotos: Int!
-  qtdMaxCarros: Int!
-}
-
-
-# Tipos de entrada
-input VeiculoInput {
-  placa: String!
-  modelo: String!
-  cor: String!
-  tipo: TipoVeiculo!
-}
-
-input AtualizarVeiculoInput {
-  id: ID!
-  placa: String!
-  modelo: String!
-  cor: String!
-  tipo: TipoVeiculo!
-}
-
-# Tipos de entrada
-input VagaInput {
-  setor: String!
-  tipo: TipoVeiculo!
-  estadoVaga: EstadoVaga!
-}
-
-input AtualizarEstadoVagaInput {
-  id: ID!
-  estadoVaga: EstadoVaga!
-}
-
-input AtualizarVagaInput {
-  id: ID!
-  setor: String!
-  tipo: TipoVeiculo!
-  estadoVaga: EstadoVaga!
-}
-
-# Tipos de entrada
-input RegistroInput {
-  entrada: String!
-  saida: String
-  vaga_id: ID!
-  veiculo_id: ID!
-}
-
-input RegistrarSaidaInput {
-  id: ID!
-  saida: String
-}
-
-input AtualizarRegistroInput {
-  id: ID!
-  entrada: String!
-  saida: String
-  vaga_id: ID!
-  veiculo_id: ID!
 }
 
 # Consultas para buscar dados
@@ -164,21 +103,21 @@ type Query{
 
 # Mutations para criar, atualizar e excluir dados
 type Mutation{
-  criarEstacionamento(id: ID, dadosEmpresa: DadosPessoaisInput!, qtdMaxMotos: Int!, qtdMaxCarros: Int!): Estacionamento!
-  atualizarEstacionamento(input: EstacionamentoInput): Estacionamento!
+  criarEstacionamento(dadosEmpresa: DadosPessoaisInput!, endereco: EnderecoInput!, qtdMaxMotos: Int!, qtdMaxCarros: Int!): Estacionamento!
+  atualizarEstacionamento(id: ID!, dadosEmpresa: DadosPessoaisInput, endereco: EnderecoInput, qtdMaxMotos: Int, qtdMaxCarros: Int): Estacionamento!
   excluirEstacionamento(id: ID!): Boolean!
 
   criarVeiculo(placa: String!, modelo: String!, cor: String!, tipo: TipoVeiculo!): Veiculo!
   excluirVeiculo(id: ID!): Boolean!
-  atualizarVeiculo(id: ID!, placa: String!, modelo: String!, cor: String!, tipo: TipoVeiculo!): Veiculo!
+  atualizarVeiculo(id: ID!, placa: String, modelo: String, cor: String, tipo: TipoVeiculo): Veiculo!
 
   criarVaga(setor: String!, tipo: TipoVeiculo!, estadoVaga: EstadoVaga!): Vaga
   excluirVaga(id: ID!): Boolean!
-  atualizarVaga(id: ID!, setor: String!, tipo: TipoVeiculo!, estadoVaga: EstadoVaga!): Vaga
+  atualizarVaga(id: ID!, setor: String, tipo: TipoVeiculo, estadoVaga: EstadoVaga): Vaga
   atualizarEstadoVaga(id: ID!, estadoVaga: EstadoVaga!): Vaga
 
-  criarRegistro(entrada: String!, saida: String, vaga_id: ID!, veiculo_id: ID!): Registro!
+  criarRegistro(vaga_id: Int!, veiculo_id: Int!, entrada: DateTime!, saida: DateTime): Registro!
   excluirRegistro(id: ID!): Boolean!
-  incluirSaidaRegistro(id: ID!, saida: String): Registro!
-  atualizarRegistro(id: ID!, entrada: String!, saida: String, vaga_id: ID!, veiculo_id: ID!): Registro!
+  incluirSaidaRegistro(id: ID!, saida: DateTime!): Registro!
+  atualizarRegistro(id: ID!, entrada: DateTime, saida: DateTime, vaga_id: Int, veiculo_id: Int): Registro!
 }

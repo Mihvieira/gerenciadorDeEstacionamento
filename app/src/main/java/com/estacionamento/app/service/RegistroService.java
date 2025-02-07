@@ -1,6 +1,7 @@
 package com.estacionamento.app.service;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,25 +57,33 @@ public class RegistroService {
             if (obj.getId() != null) {
                 entity.setId(obj.getId());
             }
-            Vaga vaga = vagaRepository.findById(obj.getVaga_id()).get();
-            Veiculo veiculo = veiculoRepository.findById(obj.getVeiculo_id()).get();
+            if (obj.getSaida() != null) {
+                entity.setSaida(obj.getSaida());
+            }
+            Vaga vaga = vagaRepository.findById(obj.getVaga_id())
+                    .orElseThrow(() -> new ResourceNotFoundException(obj.getVaga_id()));
+            Veiculo veiculo = veiculoRepository.findById(obj.getVeiculo_id())
+                    .orElseThrow(() -> new ResourceNotFoundException(obj.getVeiculo_id()));
             entity.setVaga(vaga);
             entity.setVeiculo(veiculo);
             entity.setEntrada(obj.getEntrada());
-            entity.setSaida(obj.getSaida());
-            return new RegistroDTO(repository.save(entity));
+            var savedEntity = repository.save(entity);
+            return new RegistroDTO(savedEntity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getId());
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException(e.getMessage());
         } catch (HttpMessageNotReadableException e) {
             throw new RuntimeException(e.getMessage());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException("Unexpected error: " + e.getMessage());
         }
     }
 
-    public RegistroDTO update(Long id, Instant saida) {
+    public RegistroDTO update(Long id, OffsetDateTime saida) {
         Registro entity = repository.findById(id).get();
         entity.setSaida(saida);
         return insert(new RegistroDTO(entity));
@@ -84,7 +93,5 @@ public class RegistroService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
-
-    
 
 }

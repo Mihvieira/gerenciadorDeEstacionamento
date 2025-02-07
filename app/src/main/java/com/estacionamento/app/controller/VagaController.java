@@ -39,7 +39,7 @@ public class VagaController{
     }
 
     @MutationMapping
-    public VagaDTO atualizarEstadoVaga(@Arguments Long id, EstadoVaga estadoVaga){
+    public VagaDTO atualizarEstadoVaga(@Argument Long id, @Argument EstadoVaga estadoVaga){
         return this.service.update(id, estadoVaga);
     }
 

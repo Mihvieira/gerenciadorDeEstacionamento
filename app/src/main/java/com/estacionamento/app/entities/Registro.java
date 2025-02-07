@@ -3,6 +3,7 @@ package com.estacionamento.app.entities;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,11 +12,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Entity
 @Table(name = "tb_registro")
 @Getter
+@AllArgsConstructor
 public class Registro implements Serializable{
     @Serial
     private static final long serialVersionUID = 1L;
@@ -29,18 +33,17 @@ public class Registro implements Serializable{
     @ManyToOne
     @JoinColumn(name = "veiculo_id")
     private Veiculo veiculo;
-    private Instant entrada;
-    private Instant saida;
+    @NotNull
+    private OffsetDateTime entrada;
+    private OffsetDateTime saida;
     
     public Registro() {
     }
 
-    public Registro(Long id, Vaga vaga, Veiculo veiculo, Instant entrada, Instant saida) {
-        this.id = id;
+    public Registro(Vaga vaga, Veiculo veiculo, OffsetDateTime entrada) {
         this.vaga = vaga;
         this.veiculo = veiculo;
         this.entrada = entrada;
-        this.saida = saida;
     }
 
     public Long getId() {
@@ -67,19 +70,11 @@ public class Registro implements Serializable{
         this.veiculo = veiculo;
     }
 
-    public Instant getEntrada() {
-        return entrada;
-    }
-
-    public void setEntrada(Instant entrada) {
+    public void setEntrada(OffsetDateTime entrada) {
         this.entrada = entrada;
     }
 
-    public Instant getSaida() {
-        return saida;
-    }
-
-    public void setSaida(Instant saida) {
+    public void setSaida(OffsetDateTime saida) {
         this.saida = saida;
     }
 

@@ -12,7 +12,6 @@ public class DadosPessoais implements Serializable{
     @Serial
     private static final long serialVersionUID = 1L;
 
-
     private String nome;
     private String cnpj;
     private String telefone;

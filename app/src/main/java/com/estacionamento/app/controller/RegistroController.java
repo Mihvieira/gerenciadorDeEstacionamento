@@ -1,6 +1,7 @@
 package com.estacionamento.app.controller;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,27 +37,27 @@ public class RegistroController {
 
     @MutationMapping
     public RegistroDTO criarRegistro(@Argument Long vaga_id, @Argument Long veiculo_id,
-            @Argument Instant entrada, @Argument Instant saida) {
+            @Argument OffsetDateTime entrada, @Argument OffsetDateTime saida) {
         var registro = new RegistroDTO(null, vaga_id, veiculo_id, entrada, saida);
         return this.service.insert(registro);
     }
 
     @MutationMapping
-    public RegistroDTO incluirSaidaRegistro(@Arguments Long id, Instant saida) {
+    public RegistroDTO incluirSaidaRegistro(@Argument Long id, @Argument OffsetDateTime saida) {
         return this.service.update(id, saida);
     }
 
     @MutationMapping
     public RegistroDTO atualizarRegistro(@Argument Long id, @Argument Long vaga_id, @Argument Long veiculo_id,
-    @Argument Instant entrada, @Argument Instant saida) {
+            @Argument OffsetDateTime entrada, @Argument OffsetDateTime saida) {
         var registro = new RegistroDTO(id, vaga_id, veiculo_id, entrada, saida);
         return this.service.insert(registro);
     }
 
     @MutationMapping
-    public void excluirRegistro(@Argument Long id) {
+    public Boolean excluirRegistro(@Argument Long id) {
         this.service.delete(id);
-        ;
+        return true;
     }
 
 }

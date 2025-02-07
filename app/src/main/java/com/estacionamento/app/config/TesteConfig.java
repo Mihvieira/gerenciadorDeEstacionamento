@@ -1,6 +1,7 @@
 package com.estacionamento.app.config;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class TesteConfig implements CommandLineRunner{
         Veiculo veiculo3 = new Veiculo(TipoVeiculo.CARRO, "azul", "a125", "Exemplo");
         Veiculo veiculo4 = new Veiculo(TipoVeiculo.MOTO, "azul", "a126", "Exemplo");
         veiculoRepository.saveAll(Arrays.asList(veiculo1, veiculo2, veiculo3, veiculo4));
-        Registro reg1 = new Registro(null, vaga1, veiculo1, Instant.now(), null);
+        Registro reg1 = new Registro(null, vaga1, veiculo1, OffsetDateTime.now(), null);
         registroRepository.save(reg1);  
         
     }
