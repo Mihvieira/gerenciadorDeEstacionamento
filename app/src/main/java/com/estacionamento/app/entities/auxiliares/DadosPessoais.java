@@ -3,6 +3,7 @@ package com.estacionamento.app.entities.auxiliares;
 import java.io.Serial;
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 
@@ -13,6 +14,7 @@ public class DadosPessoais implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private String nome;
+    @Column(unique = true)
     private String cnpj;
     private String telefone;
 

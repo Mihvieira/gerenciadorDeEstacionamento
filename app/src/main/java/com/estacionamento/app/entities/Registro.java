@@ -2,7 +2,7 @@ package com.estacionamento.app.entities;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.Duration;
 import java.time.OffsetDateTime;
 
 import jakarta.persistence.Entity;
@@ -14,11 +14,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @Entity
 @Table(name = "tb_registro")
-@Getter
 @AllArgsConstructor
 public class Registro implements Serializable{
     @Serial
@@ -36,6 +34,8 @@ public class Registro implements Serializable{
     @NotNull
     private OffsetDateTime entrada;
     private OffsetDateTime saida;
+    private Duration tempo;
+    private Double valorTotal;
     
     public Registro() {
     }
@@ -70,12 +70,32 @@ public class Registro implements Serializable{
         this.veiculo = veiculo;
     }
 
+    public OffsetDateTime getEntrada() {
+        return entrada;
+    }
+
     public void setEntrada(OffsetDateTime entrada) {
         this.entrada = entrada;
     }
 
+    public OffsetDateTime getSaida() {
+        return saida;
+    }
+
     public void setSaida(OffsetDateTime saida) {
         this.saida = saida;
+    }
+
+    public Duration getTempo() {
+        return this.tempo = Duration.between(entrada, saida);
+    }
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     @Override
@@ -105,7 +125,8 @@ public class Registro implements Serializable{
 
     @Override
     public String toString() {
-        return "Registro [id=" + id + ", entrada=" + entrada + ", saida=" + saida + "]";
+        return "Registro [id=" + id + ", vaga=" + vaga + ", veiculo=" + veiculo + ", entrada=" + entrada + ", saida="
+                + saida + ", tempo=" + tempo + ", valorTotal=" + valorTotal + "]";
     }
 
     

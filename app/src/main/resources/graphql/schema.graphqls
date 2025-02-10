@@ -41,6 +41,7 @@ type Estacionamento {
   endereco: Endereco!
   qtdMaxMotos: Int!
   qtdMaxCarros: Int!
+  precoPorHora: Float!
 }
 
 type Registro {
@@ -49,6 +50,8 @@ type Registro {
   veiculo_id: Int!
   entrada: DateTime!
   saida: DateTime
+  tempo: String
+  valorTotal: Float
 }
 
 type Veiculo {
@@ -65,6 +68,7 @@ type Vaga {
   setor: String!
   tipo: TipoVeiculo!
   estadoVaga: EstadoVaga!
+  estacionamento_id: Int!
 }
 
 # Tipos de entrada
@@ -103,17 +107,17 @@ type Query{
 
 # Mutations para criar, atualizar e excluir dados
 type Mutation{
-  criarEstacionamento(dadosEmpresa: DadosPessoaisInput!, endereco: EnderecoInput!, qtdMaxMotos: Int!, qtdMaxCarros: Int!): Estacionamento!
-  atualizarEstacionamento(id: ID!, dadosEmpresa: DadosPessoaisInput, endereco: EnderecoInput, qtdMaxMotos: Int, qtdMaxCarros: Int): Estacionamento!
+  criarEstacionamento(dadosEmpresa: DadosPessoaisInput!, endereco: EnderecoInput!, qtdMaxMotos: Int!, qtdMaxCarros: Int!, precoPorHora: Float!): Estacionamento!
+  atualizarEstacionamento(id: ID!, dadosEmpresa: DadosPessoaisInput, endereco: EnderecoInput, qtdMaxMotos: Int, qtdMaxCarros: Int, precoPorHora: Float): Estacionamento!
   excluirEstacionamento(id: ID!): Boolean!
 
   criarVeiculo(placa: String!, modelo: String!, cor: String!, tipo: TipoVeiculo!): Veiculo!
   excluirVeiculo(id: ID!): Boolean!
   atualizarVeiculo(id: ID!, placa: String, modelo: String, cor: String, tipo: TipoVeiculo): Veiculo!
 
-  criarVaga(setor: String!, tipo: TipoVeiculo!, estadoVaga: EstadoVaga!): Vaga
+  criarVaga(setor: String!, tipo: TipoVeiculo!, estadoVaga: EstadoVaga!, estacionamento_id: Int!): Vaga
   excluirVaga(id: ID!): Boolean!
-  atualizarVaga(id: ID!, setor: String, tipo: TipoVeiculo, estadoVaga: EstadoVaga): Vaga
+  atualizarVaga(id: ID!, setor: String, tipo: TipoVeiculo, estadoVaga: EstadoVaga, estacionamento_id: Int!): Vaga
   atualizarEstadoVaga(id: ID!, estadoVaga: EstadoVaga!): Vaga
 
   criarRegistro(vaga_id: Int!, veiculo_id: Int!, entrada: DateTime!, saida: DateTime): Registro!

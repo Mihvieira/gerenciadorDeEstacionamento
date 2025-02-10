@@ -1,12 +1,13 @@
 package com.estacionamento.app.service;
 
-import java.time.Instant;
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.estacionamento.app.dto.RegistroDTO;
 import com.estacionamento.app.entities.Veiculo;
+import com.estacionamento.app.entities.auxiliares.EstadoVaga;
 import com.estacionamento.app.repository.VagaRepository;
 import com.estacionamento.app.repository.VeiculoRepository;
 import com.estacionamento.app.service.exceptions.ResourceNotFoundException;
@@ -46,7 +47,8 @@ public class RegistroService {
     }
 
     public RegistroDTO findByDate(String data) {
-        Registro entity = repository.findByDate(data).get();
+        Registro entity = repository.findByDate(data)
+                .orElseThrow(() -> new ResourceNotFoundException(data));
         return new RegistroDTO(entity);
     }
 
@@ -54,20 +56,24 @@ public class RegistroService {
     public RegistroDTO insert(RegistroDTO obj) {
         try {
             Registro entity = new Registro();
+            Vaga vaga = vagaRepository.findById(obj.getVaga_id())
+                    .orElseThrow(() -> new ResourceNotFoundException(obj.getVaga_id()));
+            Veiculo veiculo = veiculoRepository.findById(obj.getVeiculo_id())
+                    .orElseThrow(() -> new ResourceNotFoundException(obj.getVeiculo_id()));
+            Double price = vaga.getEstacionamento().getprecoPorHora();
             if (obj.getId() != null) {
                 entity.setId(obj.getId());
             }
             if (obj.getSaida() != null) {
                 entity.setSaida(obj.getSaida());
+                entity.setValorTotal(calcPreco(price, entity.getTempo()));
+                vaga.setEstadoVaga(EstadoVaga.DESOCUPADA);
+                vagaRepository.save(vaga);
             }
-            Vaga vaga = vagaRepository.findById(obj.getVaga_id())
-                    .orElseThrow(() -> new ResourceNotFoundException(obj.getVaga_id()));
-            Veiculo veiculo = veiculoRepository.findById(obj.getVeiculo_id())
-                    .orElseThrow(() -> new ResourceNotFoundException(obj.getVeiculo_id()));
             entity.setVaga(vaga);
             entity.setVeiculo(veiculo);
             entity.setEntrada(obj.getEntrada());
-            var savedEntity = repository.save(entity);
+            Registro savedEntity = repository.save(entity);
             return new RegistroDTO(savedEntity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getId());
@@ -83,15 +89,25 @@ public class RegistroService {
         }
     }
 
-    public RegistroDTO update(Long id, OffsetDateTime saida) {
-        Registro entity = repository.findById(id).get();
+    public RegistroDTO incluirSaida(Long id, OffsetDateTime saida) {
+        Registro entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
         entity.setSaida(saida);
         return insert(new RegistroDTO(entity));
     }
 
     @Transactional
     public void delete(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Unexpected error: " + e.getMessage());
+        }
+    }
+
+    public static Double calcPreco(Double price, Duration tempo) {
+        return price * tempo.toHours();
     }
 
 }

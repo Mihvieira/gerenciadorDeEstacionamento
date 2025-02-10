@@ -23,15 +23,20 @@ public class VagaService {
     @Autowired
     private VagaRepository repository;
 
-    public List<VagaDTO> findAll(){
+    public List<VagaDTO> findAll() {
         List<Vaga> entity = repository.findAll();
         return entity.stream().map(VagaDTO::new).collect(Collectors.toList());
     }
 
     public VagaDTO findById(Long id) {
         Vaga entity = repository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
         return new VagaDTO(entity);
+    }
+
+    public List<VagaDTO> findVagasLivres(){
+        List<Vaga> entity = repository.findAll();
+        return entity.stream().map(VagaDTO::new).collect(Collectors.toList());
     }
 
     @Transactional
@@ -44,27 +49,43 @@ public class VagaService {
             }
             entity.setSetor(obj.getSetor());
             entity.setTipo(obj.getTipo());
-            return new VagaDTO(repository.save(entity));
+            Vaga savedEntity = repository.save(entity);
+            return new VagaDTO(savedEntity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getId());
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException(e.getMessage());
-        }catch (HttpMessageNotReadableException e){
+        } catch (HttpMessageNotReadableException e) {
             throw new RuntimeException(e.getMessage());
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException("Unexpected error: " + e.getMessage());
         }
     }
 
     public VagaDTO update(Long id, EstadoVaga estadoVaga) {
-        Vaga vaga = repository.findById(id).get();
+        Vaga vaga = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
         vaga.setEstadoVaga(estadoVaga);
         return insert(new VagaDTO(vaga));
     }
 
     @Transactional
-    public void delete(Long id){
-        repository.deleteById(id);
+    public void delete(Long id) {
+        try {
+            repository.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Unexpected error: " + e.getMessage());
+        }
+
+    }
+
+    public List<Vaga> findEmptyMotoVagas(){
+        return repository.findEmptyMotoVagas();
+    }
+
+    public List<Vaga> findEmptyCarroVagas(){
+        return repository.findEmptyCarroVagas();
     }
 
 }

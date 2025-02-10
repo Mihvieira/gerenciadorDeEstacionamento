@@ -2,6 +2,8 @@ package com.estacionamento.app.entities;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Set;
+
 import com.estacionamento.app.entities.auxiliares.DadosPessoais;
 import com.estacionamento.app.entities.auxiliares.Endereco;
 
@@ -10,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -31,13 +34,17 @@ public class Estacionamento implements Serializable{
     private Endereco endereco;
     private Integer qtdMaxMotos;
     private Integer qtdMaxCarros;
+    private Double precoPorHora;
+    @OneToMany(mappedBy = "estacionamento")
+    private Set<Vaga> vagas;
 
-
-    public Estacionamento(DadosPessoais dadosEmpresa, Endereco endereco, Integer qtdMaxMotos, Integer qtdMaxCarros) {
+    public Estacionamento(DadosPessoais dadosEmpresa, Endereco endereco, Integer qtdMaxMotos, Integer qtdMaxCarros,
+            Double precoPorHora) {
         this.dadosEmpresa = dadosEmpresa;
         this.endereco = endereco;
         this.qtdMaxMotos = qtdMaxMotos;
         this.qtdMaxCarros = qtdMaxCarros;
+        this.precoPorHora = precoPorHora;
     }
 
     public Long getId() {
@@ -78,6 +85,14 @@ public class Estacionamento implements Serializable{
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public Double getprecoPorHora() {
+        return precoPorHora;
+    }
+
+    public void setprecoPorHora(Double precoPorHora) {
+        this.precoPorHora = precoPorHora;
     }
 
     @Override

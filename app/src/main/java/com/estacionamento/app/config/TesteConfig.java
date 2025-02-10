@@ -37,20 +37,21 @@ public class TesteConfig implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        Vaga vaga1 = new Vaga("A", TipoVeiculo.CARRO);
-        Vaga vaga2 = new Vaga("B", TipoVeiculo.CARRO);
-        Vaga vaga3 = new Vaga("C", TipoVeiculo.MOTO);
-        vagaRepository.saveAll(Arrays.asList(vaga1, vaga2, vaga3));
         Endereco endereco = new Endereco("rua tal", "privareva", "766666", "exemplo", "RO", null, "12-B");
         DadosPessoais dados = new DadosPessoais("empresaNome", "123456", "123");
-        Estacionamento estacionamento = new Estacionamento(dados, endereco, 10, 10);
+        Estacionamento estacionamento = new Estacionamento(dados, endereco, 10, 10, 10.00);
         estacionamentoRepository.save(estacionamento);
+        Vaga vaga1 = new Vaga("A", TipoVeiculo.CARRO, estacionamento);
+        Vaga vaga2 = new Vaga("B", TipoVeiculo.CARRO, estacionamento);
+        Vaga vaga3 = new Vaga("C", TipoVeiculo.MOTO, estacionamento);
+        vagaRepository.saveAll(Arrays.asList(vaga1, vaga2, vaga3));
+        
         Veiculo veiculo1 = new Veiculo(TipoVeiculo.CARRO, "azul","a123", "Exemplo");
         Veiculo veiculo2 = new Veiculo(TipoVeiculo.CARRO, "azul", "a124", "Exemplo");
         Veiculo veiculo3 = new Veiculo(TipoVeiculo.CARRO, "azul", "a125", "Exemplo");
         Veiculo veiculo4 = new Veiculo(TipoVeiculo.MOTO, "azul", "a126", "Exemplo");
         veiculoRepository.saveAll(Arrays.asList(veiculo1, veiculo2, veiculo3, veiculo4));
-        Registro reg1 = new Registro(null, vaga1, veiculo1, OffsetDateTime.now(), null);
+        Registro reg1 = new Registro(vaga1, veiculo1, OffsetDateTime.now());
         registroRepository.save(reg1);  
         
     }

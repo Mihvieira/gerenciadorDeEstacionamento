@@ -42,7 +42,7 @@ public class EstacionamentoService {
             entity.setDadosEmpresa(obj.getDadosEmpresa());
             entity.setQtdMaxCarros(obj.getQtdMaxCarros());
             entity.setQtdMaxMotos(obj.getQtdMaxMotos());
-            var savedEntity = repository.save(entity);
+            Estacionamento savedEntity = repository.save(entity);
             return new EstacionamentoDTO(savedEntity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getId());
@@ -61,7 +61,13 @@ public class EstacionamentoService {
 
     @Transactional
     public void delete(Long id){
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Unexpected error: " + e.getMessage());
+        }
     }
 
 }

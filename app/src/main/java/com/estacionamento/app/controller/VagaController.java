@@ -33,8 +33,8 @@ public class VagaController{
     }
 
     @MutationMapping(name = "criarVaga")
-    public VagaDTO criarVaga(@Argument String setor, @Argument TipoVeiculo tipo, @Argument EstadoVaga estadoVaga){
-        var vaga = new VagaDTO(setor, tipo, estadoVaga);
+    public VagaDTO criarVaga(@Argument String setor, @Argument TipoVeiculo tipo, @Argument EstadoVaga estadoVaga, @Argument Long estacionamento_id){
+        var vaga = new VagaDTO(setor, tipo, estadoVaga, estacionamento_id);
         return this.service.insert(vaga);
     }
 
@@ -44,8 +44,8 @@ public class VagaController{
     }
 
     @MutationMapping
-    public VagaDTO atualizarVaga(@Argument Long id, @Argument String setor, @Argument TipoVeiculo tipo, @Argument EstadoVaga estadoVaga){
-        var vaga = new VagaDTO(id, setor, tipo, estadoVaga);
+    public VagaDTO atualizarVaga(@Argument Long id, @Argument String setor, @Argument TipoVeiculo tipo, @Argument EstadoVaga estadoVaga, @Argument Long estacionamento_id){
+        var vaga = new VagaDTO(id, setor, tipo, estadoVaga, estacionamento_id);
         return this.service.insert(vaga);
     }
 

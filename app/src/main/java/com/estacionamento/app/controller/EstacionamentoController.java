@@ -36,16 +36,16 @@ public class EstacionamentoController {
     @MutationMapping
     public EstacionamentoDTO criarEstacionamento(@Arguments DadosPessoais dadosEmpresa,
             @Arguments Endereco endereco, @Argument Integer qtdMaxMotos,
-            @Argument Integer qtdMaxCarros) {
-        var estacionamento = new EstacionamentoDTO(null, dadosEmpresa, endereco, qtdMaxMotos, qtdMaxCarros);
+            @Argument Integer qtdMaxCarros, @Argument Double precoPorHora) {
+        var estacionamento = new EstacionamentoDTO(null, dadosEmpresa, endereco, qtdMaxMotos, qtdMaxCarros, precoPorHora);
         return this.service.insert(estacionamento);
     }
 
     @MutationMapping
     public EstacionamentoDTO atualizarEstacionamento(@Argument Long id, @Arguments DadosPessoais dadosEmpresa,
     @Arguments Endereco endereco, @Argument Integer qtdMaxMotos,
-    @Argument Integer qtdMaxCarros) {
-        var estacionamento = new EstacionamentoDTO(id, dadosEmpresa, endereco, qtdMaxMotos, qtdMaxCarros);
+    @Argument Integer qtdMaxCarros, @Argument Double precoPorHora) {
+        var estacionamento = new EstacionamentoDTO(id, dadosEmpresa, endereco, qtdMaxMotos, qtdMaxCarros, precoPorHora);
         return this.service.insert(estacionamento);
     }
 

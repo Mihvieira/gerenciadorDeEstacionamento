@@ -1,12 +1,11 @@
 package com.estacionamento.app.controller;
 
-import java.time.Instant;
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.Arguments;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -38,19 +37,19 @@ public class RegistroController {
     @MutationMapping
     public RegistroDTO criarRegistro(@Argument Long vaga_id, @Argument Long veiculo_id,
             @Argument OffsetDateTime entrada, @Argument OffsetDateTime saida) {
-        var registro = new RegistroDTO(null, vaga_id, veiculo_id, entrada, saida);
+        var registro = new RegistroDTO(vaga_id, veiculo_id, entrada, saida);
         return this.service.insert(registro);
     }
 
     @MutationMapping
     public RegistroDTO incluirSaidaRegistro(@Argument Long id, @Argument OffsetDateTime saida) {
-        return this.service.update(id, saida);
+        return this.service.incluirSaida(id, saida);
     }
 
     @MutationMapping
     public RegistroDTO atualizarRegistro(@Argument Long id, @Argument Long vaga_id, @Argument Long veiculo_id,
             @Argument OffsetDateTime entrada, @Argument OffsetDateTime saida) {
-        var registro = new RegistroDTO(id, vaga_id, veiculo_id, entrada, saida);
+        var registro = new RegistroDTO(id, vaga_id, veiculo_id, entrada, saida, null, null);
         return this.service.insert(registro);
     }
 

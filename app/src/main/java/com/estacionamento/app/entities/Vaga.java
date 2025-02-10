@@ -14,8 +14,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -37,14 +42,19 @@ public class Vaga implements Serializable{
     private EstadoVaga estadoVaga;
     @OneToMany(mappedBy = "vaga")
     private List<Registro> registros = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "estacionamento_id")
+    @NotNull
+    private Estacionamento estacionamento;
 
     public Vaga() {
     }
 
-    public Vaga(String setor, TipoVeiculo tipo) {
+    public Vaga(String setor, TipoVeiculo tipo, Estacionamento estacionamento) {
         this.setor = setor;
         this.tipo = tipo;
         this.estadoVaga = EstadoVaga.DESOCUPADA;
+        this.estacionamento = estacionamento;
     }
 
     public Long getId() {
@@ -86,7 +96,13 @@ public class Vaga implements Serializable{
 
     public void setEstadoVaga(EstadoVaga estadoVaga) {
         this.estadoVaga = estadoVaga;
-    }   
+    }
+
+    
+
+    public void setEstacionamento(Estacionamento estacionamento) {
+        this.estacionamento = estacionamento;
+    }
 
     @Override
     public int hashCode() {

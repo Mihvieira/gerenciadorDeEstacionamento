@@ -22,14 +22,14 @@ public class VeiculoService {
     @Autowired
     private VeiculoRepository repository;
 
-    public List<VeiculoDTO> findAll(){
+    public List<VeiculoDTO> findAll() {
         List<Veiculo> entities = repository.findAll();
         return entities.stream().map(VeiculoDTO::new).collect(Collectors.toList());
     }
 
     public VeiculoDTO findById(Long id) {
         Veiculo entity = repository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
         System.out.println(entity);
         return new VeiculoDTO(entity);
     }
@@ -45,7 +45,8 @@ public class VeiculoService {
             entity.setModelo(obj.getModelo());
             entity.setPlaca(obj.getPlaca());
             entity.setTipo(obj.getTipo());
-            return new VeiculoDTO(repository.save(entity));
+            Veiculo savedEntity = repository.save(entity);
+            return new VeiculoDTO(savedEntity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(obj.getId());
         } catch (DataIntegrityViolationException e){
@@ -58,19 +59,25 @@ public class VeiculoService {
     }
 
     public VeiculoDTO update(VeiculoDTO obj) {
-        Veiculo Veiculo = repository.findById(obj.getId()).get();
+        Veiculo Veiculo = repository.findById(obj.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(obj.getId()));
         return insert(new VeiculoDTO(Veiculo));
     }
 
     @Transactional
-    public void delete(Long id){
-        repository.deleteById(id);
+    public void delete(Long id) {
+        try {
+            repository.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Unexpected error: " + e.getMessage());
+        }
     }
 
     public VeiculoDTO findByPlaca(String placa) {
         Veiculo Veiculo = repository.findByPlaca(placa).get();
         return new VeiculoDTO(Veiculo);
     }
-
 
 }

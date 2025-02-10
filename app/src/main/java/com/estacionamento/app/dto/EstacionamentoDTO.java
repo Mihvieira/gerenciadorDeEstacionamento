@@ -7,9 +7,11 @@ import com.estacionamento.app.entities.Estacionamento;
 import com.estacionamento.app.entities.auxiliares.DadosPessoais;
 import com.estacionamento.app.entities.auxiliares.Endereco;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@Data
 public class EstacionamentoDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -19,10 +21,11 @@ public class EstacionamentoDTO implements Serializable {
     private Endereco endereco;
     private Integer qtdMaxMotos;
     private Integer qtdMaxCarros;
+    private Double precoPorHora;
 
 
     public EstacionamentoDTO(Long id, DadosPessoais dadosEmpresa, Endereco endereco, Integer qtdMaxMotos,
-            Integer qtdMaxCarros) {
+            Integer qtdMaxCarros, Double precoPorHora) {
         if (id !=null) {
             this.id = id;
         }
@@ -30,6 +33,7 @@ public class EstacionamentoDTO implements Serializable {
         this.endereco = endereco;
         this.qtdMaxMotos = qtdMaxMotos;
         this.qtdMaxCarros = qtdMaxCarros;
+        this.precoPorHora = precoPorHora;
     }
 
     public EstacionamentoDTO(Estacionamento obj) {
@@ -40,71 +44,8 @@ public class EstacionamentoDTO implements Serializable {
         setQtdMaxMotos(obj.getQtdMaxMotos());
         setDadosEmpresa(obj.getDadosEmpresa());
         setEndereco(obj.getEndereco());
+        setPrecoPorHora(obj.getprecoPorHora());
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public DadosPessoais getDadosEmpresa() {
-        return dadosEmpresa;
-    }
-
-    public void setDadosEmpresa(DadosPessoais dadosEmpresa) {
-        this.dadosEmpresa = dadosEmpresa;
-    }
-
-    public Integer getQtdMaxMotos() {
-        return qtdMaxMotos;
-    }
-
-    public void setQtdMaxMotos(Integer qtdMaxMotos) {
-        this.qtdMaxMotos = qtdMaxMotos;
-    }
-
-    public Integer getQtdMaxCarros() {
-        return qtdMaxCarros;
-    }
-
-    public void setQtdMaxCarros(Integer qtdMaxCarros) {
-        this.qtdMaxCarros = qtdMaxCarros;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        EstacionamentoDTO other = (EstacionamentoDTO) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
 
 }
