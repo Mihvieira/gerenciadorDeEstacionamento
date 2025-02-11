@@ -7,15 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.estacionamento.app.entities.Vaga;
+import com.estacionamento.app.entities.auxiliares.EstadoVaga;
+import com.estacionamento.app.entities.auxiliares.TipoVeiculo;
 
 @Repository
-public interface VagaRepository extends JpaRepository<Vaga, Long>{
+public interface VagaRepository extends JpaRepository<Vaga, Long> {
 
-    @Query("select v from vaga v where v.estadoVaga = DESOCUPADA AND v.tipoVaga = MOTO")
-    List<Vaga> findEmptyMotoVagas();
-
-    @Query("select v from vaga v where v.estadoVaga = DESOCUPADA AND v.tipoVaga = CARRO")
-    List<Vaga> findEmptyCarroVagas();
-
+    @Query("SELECT v FROM Vaga v WHERE v.estadoVaga = :estadoVaga AND v.tipo = :tipo")
+    List<Vaga> findVagasPorEstadoTipo(EstadoVaga estadoVaga, TipoVeiculo tipo);
 
 }

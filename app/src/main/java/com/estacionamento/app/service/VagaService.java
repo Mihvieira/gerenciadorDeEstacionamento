@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.estacionamento.app.dto.VagaDTO;
 import com.estacionamento.app.entities.Vaga;
 import com.estacionamento.app.entities.auxiliares.EstadoVaga;
+import com.estacionamento.app.entities.auxiliares.TipoVeiculo;
 import com.estacionamento.app.repository.VagaRepository;
 import com.estacionamento.app.service.exceptions.ResourceNotFoundException;
 
@@ -34,8 +35,8 @@ public class VagaService {
         return new VagaDTO(entity);
     }
 
-    public List<VagaDTO> findVagasLivres(){
-        List<Vaga> entity = repository.findAll();
+    public List<VagaDTO> findVagasPorEstadoTipo(EstadoVaga estadoVaga, TipoVeiculo tipo){
+        List<Vaga> entity = repository.findVagasPorEstadoTipo(estadoVaga, tipo);
         return entity.stream().map(VagaDTO::new).collect(Collectors.toList());
     }
 
@@ -78,14 +79,6 @@ public class VagaService {
             throw new RuntimeException("Unexpected error: " + e.getMessage());
         }
 
-    }
-
-    public List<Vaga> findEmptyMotoVagas(){
-        return repository.findEmptyMotoVagas();
-    }
-
-    public List<Vaga> findEmptyCarroVagas(){
-        return repository.findEmptyCarroVagas();
     }
 
 }

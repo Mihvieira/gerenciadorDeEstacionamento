@@ -3,7 +3,6 @@ package com.estacionamento.app.controller;
 import java.util.List;
 
 import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.Arguments;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -30,6 +29,11 @@ public class VagaController{
     @QueryMapping
     public VagaDTO vagaPorId(@Argument Long id){
         return this.service.findById(id);
+    }
+
+    @QueryMapping
+    public List<VagaDTO> vagaPorEstadoTipo(@Argument EstadoVaga estadoVaga, @Argument TipoVeiculo tipo){
+        return this.service.findVagasPorEstadoTipo(estadoVaga, tipo);
     }
 
     @MutationMapping(name = "criarVaga")

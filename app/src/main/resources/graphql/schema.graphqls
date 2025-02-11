@@ -90,19 +90,20 @@ input DadosPessoaisInput {
 
 # Consultas para buscar dados
 type Query{
-  estacionamentos: [Estacionamento!]!
+  estacionamentos: [Estacionamento]
   estacionamentoPorId(id: ID!): Estacionamento
 
-  veiculos: [Veiculo!]!
+  veiculos: [Veiculo]
   veiculoPorId(id: ID!): Veiculo
   veiculoPorPlaca(placa: String!): Veiculo
 
   vagas: [Vaga!]!
   vagaPorId(id: ID!): Vaga
+  vagaPorEstadoTipo(estadoVaga: EstadoVaga!, tipo: TipoVeiculo!): [Vaga]
 
-  registros: [Registro!]!
+  registros: [Registro]
   registroPorId(id: ID!): Registro
-  registroPorData(data: String!): [Registro!]!
+  registroPorData(data: String!): [Registro]
 }
 
 # Mutations para criar, atualizar e excluir dados
