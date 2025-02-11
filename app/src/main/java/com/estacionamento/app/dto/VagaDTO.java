@@ -3,7 +3,6 @@ package com.estacionamento.app.dto;
 import java.io.Serial;
 import java.io.Serializable;
 
-import com.estacionamento.app.entities.Estacionamento;
 import com.estacionamento.app.entities.Vaga;
 import com.estacionamento.app.entities.auxiliares.EstadoVaga;
 import com.estacionamento.app.entities.auxiliares.TipoVeiculo;

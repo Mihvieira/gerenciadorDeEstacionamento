@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 @Entity
 @Table(name = "tb_registro")
 @AllArgsConstructor
-public class Registro implements Serializable{
+public class Registro implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class Registro implements Serializable{
     private OffsetDateTime saida;
     private Duration tempo;
     private Double valorTotal;
-    
+
     public Registro() {
     }
 
@@ -87,7 +87,11 @@ public class Registro implements Serializable{
     }
 
     public Duration getTempo() {
-        return this.tempo = Duration.between(entrada, saida);
+        if (this.entrada != null && this.saida != null) {
+            return Duration.between(this.entrada, this.saida);
+        }
+        return Duration.ZERO;
+
     }
 
     public Double getValorTotal() {
@@ -129,5 +133,4 @@ public class Registro implements Serializable{
                 + saida + ", tempo=" + tempo + ", valorTotal=" + valorTotal + "]";
     }
 
-    
 }

@@ -1,37 +1,172 @@
 # Gerenciador de Estacionamento
 
-Este é um projeto Java para gerenciar um estacionamento. Ele permite registrar a entrada e saída de veículos, calcular o tempo de permanência e o valor a ser cobrado.
+Este projeto consiste na criação de uma API para gerenciamento de estacionamento. Ele permite registrar a entrada e saída de veículos, calcular o tempo de permanência e o valor a ser cobrado.
+
+A API foi desenvolvida utilizando GraphQL, o que permite consultas flexíveis e eficientes, possibilitando que os clientes obtenham exatamente os dados de que precisam em uma única requisição.
+
+Esse projeto foi inspirado no desafio criado pela FCAMARA no link a seguir: [https://github.com/fcamarasantos/backend-test-java](Desafio).
 
 ## Funcionalidades
 
-- Registro de entrada de veículos
-- Registro de saída de veículos
-- Cálculo do tempo de permanência
-- Cálculo do valor a ser cobrado
+- Cadastro de empresa de estacionamento
+- Cadastro de veículos e vagas
+- Cadastro de registro de entrada e saída
+- Consulta de veículos e vagas desocupadas/ocupadas
+- Consulta de entradas e saídas com sua duração e valor cobrado
 
-## Requisitos
+## Tecnologias Utilizadas
 
-- Java 11 ou superior
+- Java 21 ou superior
+- Spring Boot
+- Spring Data JPA
+- GraphQL
+- H2 Database (para testes)
 - Maven
 
-## Como executar
+## Configurações Necessárias
+
+### Pré-requisitos
+
+- Java 21 ou superior
+- Maven
+
+## Executando a Aplicação
 
 1. Clone o repositório:
-    ```sh
-    git clone https://github.com/seu-usuario/gerenciadorDeEstacionamento.git
-    ```
-2. Navegue até o diretório do projeto:
-    ```sh
-    cd gerenciadorDeEstacionamento
-    ```
-3. Compile o projeto usando Maven:
-    ```sh
-    mvn clean install
-    ```
-4. Execute o projeto:
-    ```sh
-    java -jar target/gerenciadorDeEstacionamento-1.0-SNAPSHOT.jar
-    ```
+
+```
+git clone https://github.com/Mihvieira/gerenciadorDeEstacionamento
+cd gerenciadorDeEstacionamento
+```
+
+2. Compile e execute a aplicação usando Maven:
+
+```
+mvn clean install
+mvn spring-boot:run
+```
+
+3. Acesse o console H2 para verificar o banco de dados:
+
+* URL: <http://localhost:8080/h2-console>
+* JDBC URL: jdbc:h2:mem:testdb
+* User Name: sa
+* Password: (deixe em branco)
+
+## Chamadas dos Serviços
+
+* Listar Estacionamentos
+```
+query {
+  estacionamentos {
+    id
+    dadosEmpresa {
+      nome
+      cnpj
+      telefone
+    }
+    endereco {
+      logradouro
+      bairro
+      cidade
+      uf
+      complemento
+      numero
+    }
+    qtdMaxMotos
+    qtdMaxCarros
+    precoPorHora
+  }
+}
+```
+
+* Buscar Estacionamento por ID
+
+```
+query($id: ID!) {
+  estacionamentoPorId(id: $id) {
+    id
+    dadosEmpresa {
+      nome
+      cnpj
+      telefone
+    }
+    endereco {
+      logradouro
+      bairro
+      cidade
+      uf
+      complemento
+      numero
+    }
+    qtdMaxMotos
+    qtdMaxCarros
+    precoPorHora
+  }
+}
+```
+
+##  Mutações (Mutations)
+
+* Criar Estacionamento
+
+```
+mutation($input: EstacionamentoInput!) {
+  criarEstacionamento(input: $input) {
+    id
+    dadosEmpresa {
+      nome
+      cnpj
+      telefone
+    }
+    endereco {
+      logradouro
+      bairro
+      cidade
+      uf
+      complemento
+      numero
+    }
+    qtdMaxMotos
+    qtdMaxCarros
+    precoPorHora
+  }
+}
+```
+
+* Atualizar Estacionamento
+
+```
+mutation($id: ID!, $input: EstacionamentoInput!) {
+  atualizarEstacionamento(id: $id, input: $input) {
+    id
+    dadosEmpresa {
+      nome
+      cnpj
+      telefone
+    }
+    endereco {
+      logradouro
+      bairro
+      cidade
+      uf
+      complemento
+      numero
+    }
+    qtdMaxMotos
+    qtdMaxCarros
+    precoPorHora
+  }
+}
+```
+
+* Excluir Estacionamento
+
+```
+mutation($id: ID!) {
+  excluirEstacionamento(id: $id)
+}
+```
 
 ## Contribuição
 

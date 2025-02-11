@@ -65,6 +65,7 @@ public class RegistroService {
                 entity.setId(obj.getId());
             }
             if (obj.getSaida() != null) {
+                entity.setEntrada(obj.getEntrada());
                 entity.setSaida(obj.getSaida());
                 entity.setValorTotal(calcPreco(price, entity.getTempo()));
                 vaga.setEstadoVaga(EstadoVaga.DESOCUPADA);
@@ -107,7 +108,12 @@ public class RegistroService {
     }
 
     public static Double calcPreco(Double price, Duration tempo) {
-        return price * tempo.toHours();
+        if (price == null || tempo == null) {
+            throw new IllegalArgumentException("Price and duration must not be null");
+        }
+        long minutes = tempo.toMinutes();
+        double valorTotal = (price / 60) * minutes;
+        return Math.round(valorTotal * 100.0) / 100.0;
     }
 
 }
