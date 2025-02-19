@@ -4,8 +4,6 @@ Este projeto consiste na criação de uma API para gerenciamento de estacionamen
 
 A API foi desenvolvida utilizando GraphQL, o que permite consultas flexíveis e eficientes, possibilitando que os clientes obtenham exatamente os dados de que precisam em uma única requisição.
 
-Esse projeto foi inspirado no desafio criado pela FCAMARA no link a seguir: [Desafio](https://github.com/fcamarasantos/backend-test-java).
-
 ## Funcionalidades
 
 - Cadastro de empresa de estacionamento
